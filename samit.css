@@ -1,0 +1,73 @@
+
+*{
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+padding: 0;
+}
+.main2{
+    border-top: 2px solid gainsboro;
+    background-color: rgb(17, 32, 32);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.c1{
+    border-radius: 15px;
+}
+.card{
+    border: 1px solid black;
+    /* background-color: aqua; */
+    margin: 10px;
+    align-items: center;
+     /* padding: 20px 10px 10px 10px; */
+     height: fit-content;
+    /* justify-content: center; */
+}
+.section_card{
+    display: flex; 
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    margin: 25px;  
+}
+.cardhead{
+    /* border: 2px solid black; */
+    padding: 10px 20px 0 20px;
+    /* border-bottom: 2px solid green; */
+    /* padding: 4px; */
+}
+.cardbody{
+    padding: 5px ;
+    margin: 10px 10px;
+    /* border: 2px solid goldenrod; */
+    width: 100%;
+    height: 100%;
+}
+/* .card:hover .c1::before{
+    opacity: 1;
+}
+
+.card:hover .c1::after{
+height: 120px;
+}
+.title{
+    width: 100%;
+    transition: transform 0.5s;
+}
+.card:hover .title{
+    transform: translate3d(0%, -50px, 100px);
+} */
+
+#bannermain{
+    /* background-color: rgb(0, 0, 0); */
+    text-decoration: underline;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 10px 0;
+}
+.eventsImg{
+    border-radius: 10px;
+}
