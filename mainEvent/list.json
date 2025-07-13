@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "name": "Purna Rai Concert",
+    "price": 800,
+    "description": "A vibrant folk-pop collective known for their catchy tunes and energetic live performances, blending traditional Nepali sounds with modern melodies.",
+    "location": "Roadhouse Cafe, Thamel, Kathmandu",
+    "photo": "../images/purnadaju.jpg",
+    "tag": "Rock Gig",
+    "time": "5PMto8PM",
+    "date": "2025-08-25"
+  },
+  {
+    "id": 2,
+    "name": "Nepathya",
+    "price": 650,
+    "description": "A legendary Nepali folk-rock band celebrated for their poignant lyrics, powerful stage presence, and unique fusion of traditional and contemporary sounds.",
+    "location": "Basantapur Durbar Square, Kathmandu",
+    "photo": "../images/Nepathya.webp",
+    "tag": "Live Music",
+    "time": "7PMto9PM",
+    "date": "2025-09-10"
+  },
+  {
+    "id": 3,
+    "name": "1974 AD",
+    "price": 1000,
+    "description": "Pioneers of Nepali rock, this iconic band is cherished for their timeless melodic rock hits and enduring influence on the country's music scene.",
+    "location": "Lord of the Drinks (LOD), Thamel, Ktm",
+    "photo": "../images/1974.jpg",
+    "tag": "Charity",
+    "time": "9PMto12PM",
+    "date": "2025-07-20"
+  },
+  {
+    "id": 4,
+    "name": "The Edge Band",
+    "price": 500,
+    "description": "Known for their heartfelt ballads and captivating rock anthems, The Edge Band delivers soulful music that resonates deeply with audiences.",
+    "location": "Main-Road-02 ,Thamel, Kathmandu",
+    "photo": "../images/edgeBand.jpg",
+    "tag": "Concert",
+    "time": "4PMto7PM",
+    "date": "2025-09-03"
+  },
+  {
+    "id": 5,
+    "name": "Albatross",
+    "price": 1200,
+    "description": "A powerhouse in the Nepali rock scene, Albatross is recognized for their intense energy, raw vocals, and compelling alternative rock sound.",
+    "location": "Jhamsikhel, Lalitpur",
+    "photo": "../images/albatross.jpg",
+    "tag": "Live Music",
+    "time": "9PMto1AM",
+    "date": "2025-10-15"
+  },
+  {
+    "id": 6,
+    "name": "Kutumba",
+    "price": 500,
+    "description": "An instrumental folk ensemble creating mesmerizing soundscapes exclusively with traditional Nepali instruments, offering a unique and authentic musical experience.",
+    "location": "Lazimpat, Kathmandu",
+    "photo": "../images/kutumba.jpg",
+    "tag": "Acoustic Night",
+    "time": "7PMto8:30PM",
+    "date": "2025-08-08"
+  },
+  {
+    "id": 7,
+    "name": "The Elements",
+    "price": 600,
+    "description": "A soft rock acoustic band beloved for their mellow melodies and introspective lyrics, providing a relaxing yet engaging musical journey.",
+    "location": "Thamel, Kathmandu",
+    "photo": "../images/elements.jpeg",
+    "tag": "Indie Night",
+    "time": "4PMto6PM",
+    "date": "2025-09-22"
+  },
+  {
+    "id": 8,
+    "name": "Kuma Sagar and the band",
+    "price": 900,
+    "description": "An emerging act known for their fresh sound and engaging performances, quickly gaining recognition in the contemporary Nepali music landscape.",
+    "location": "Pokhara Street, Ktm",
+    "photo": "../images/KumaSagar.jpg",
+    "time": "4PMto6PM",
+    "date": "2025-07-30",
+    "tag": "Special Event"
+  }
+]

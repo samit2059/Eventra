@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In Page</title>
+    <link rel="stylesheet" href="style.css" />
+    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <!-- write a simple user register form with js validation and dom manipulation -->
+    <div
+      class="form"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        /* padding-top: 120px; */
+        margin-top: 140px;
+      "
+    >
+      <form method="get" id="register-form" target="_blank" action="">
+        <fieldset>
+          <h2>Sign-In Form</h2>
+          <div class="form1">
+            <div class="username">
+              <label for="username">User-name:</label>
+              <br />
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Enter Your name"
+              />
+              <p class="e1user" id="e1user"></p>
+            </div>
+            <br />
+            <div class="email">
+              <label for="email">Email :</label>
+              <br />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter Your email"
+              />
+            </div>
+            <br />
+            <div class="password">
+              <label for="password">Password :</label>
+              <br />
+               <input
+                type="password"
+                name="pwd"
+                id="pwd"
+                title="pwd"
+                placeholder="Enter Your Password"
+              
+              />
+              <!-- <button type='button' onclick="display()">show</button> -->
+              <button
+                type="button"
+                onclick="display()"
+                style="border: none; margin-top:5px;background-color: transparent; width: 5px; height:4px;"
+              >
+         <span class="material-symbols-outlined" id="visibilityOn" >visibility</span>
+        <span class="material-symbols-outlined" id="visibilityOff"style="display: none;">visibility_off</span>
+              </button>
+             </div>
+            <br />
+            <div class="gender">
+              <label>Gender :</label>
+
+              <input
+                type="radio"
+                name="radio"
+                id="male"
+                value="Male"
+                style="margin: 0 10px"
+              /><label for="male">Male</label>
+              <input
+                type="radio"
+                name="radio"
+                id="female"
+                value="Female"
+                style="margin: 0 10px"
+              /><label for="female">Female</label>
+            </div>
+            <br />
+             
+            <div class="bt">
+              <button type="submit" id="submit" class="btn" onclick="submi()">Sign-In</button>
+              <button type="reset" id="reset" class="btn">Reset</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

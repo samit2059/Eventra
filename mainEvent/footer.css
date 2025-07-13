@@ -1,0 +1,19 @@
+ footer {
+      background: #0b1126;
+      color: #cfcfcf;
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    footer a {
+      color: #ff4141;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: 0.3s ease-in;
+    }
+    
+    footer a:hover {
+      color: #61bb46;
+      text-decoration: underline;
+    }
