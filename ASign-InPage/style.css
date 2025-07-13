@@ -7,10 +7,12 @@ body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: rgb(221, 255, 255);
 }
-.form1{
+.form{
     /* border: 1px solid burlywood; */
     text-align: center;
+    margin-top: 0px;
     padding: 10px;
+    margin-bottom: 140px;
 }
 form{
     background-color: aqua;
@@ -33,7 +35,7 @@ input{
 }
 fieldset{
          width: 350px;
-            height: 450px;
+            height: 550px;
             border: none;
             /* border: 1px solid black; */
             background-color: rgba(217, 255, 127, 0.801);
