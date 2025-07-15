@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EVENTRA -Contact us</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="footer.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/grp_prj/images/Logo1.png" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+    body {
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .contact-container {
+      padding: 100px 20px 60px;
+      min-height: 100vh;
+    }
+
+    .contact-heading {
+      font-size: 36px;
+      text-align: center;
+      color: #f57c00;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .contact-message {
+      text-align: center;
+      font-size: 16px;
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+
+    .developer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background-color: #1e2d44;
+      border-radius: 15px;
+      padding: 25px 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      color: #ddd;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(255, 123, 0, 0.2);
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #f57c00;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .contact-card h5 {
+      color: #f57c00;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .contact-card p {
+      margin: 4px 0;
+      font-size: 15px;
+      color: #ccc;
+    }
+
+    .social-icons a {
+      color: #f57c00;
+      margin: 0 8px;
+      font-size: 18px;
+      transition: 0.2s;
+    }
+
+    .social-icons a:hover {
+      color: #fff;
+    }
+
+    /* Contact Form */
+    .contact-form-section {
+      margin-top: 80px;
+      max-width: 700px;
+      background-color: #1e2d44;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-form-section input,
+    .contact-form-section textarea {
+      background-color: #f4f6f8;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .contact-form-section button {
+      background-color: #f57c00;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    /* Lightbox preview */
+    .preview-img {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      display: none;
+    }
+
+    #img-preview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #img-preview-modal img {
+      max-height: 90vh;
+      border: 5px solid #f57c00;
+      border-radius: 12px;
+    }
+
+    #img-preview-modal span {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+   <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top justify-center" style="background-color: #0b1126; padding-top: 15px;">
+    <div class="container">
+      <a
+          class="navbar-brand p-1"
+          href="event.html"
+          style="color: aliceblue; font-weight: bold; font-size: 24px"
+          ><img src="../images/Logo1.png" width="30" height="30" style="margin: 0 5px;" alt=""/>Eventra</a
+        ><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-family: Open sans;">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" style="padding: 0 20px 0 40px;">
+            <a class="nav-link active" href="event.html" style="color: aliceblue;">Home</a>
+          </li>
+          <li class="nav-item" style="padding: 0 20px;">
+            <a class="nav-link" href="contact_us.html" style="color: aliceblue;">Contact Us</a>
+          </li>
+          <li class="nav-item" style="padding: 0 20px;">
+            <a class="nav-link" href="../ASign-InPage/index.html" style="color: aliceblue;">Host-Event</a>
+          </li>
+          <li class="nav-item" style="padding: 0 20px;">
+            <a class="nav-link" href="about_us.html" style="color: aliceblue;">About Us</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search" style="font-family: Open sans;">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+        </form>
+        <li class="nav-item d-flex" style="padding: 15px 5px; background-color: #ed3d0c; border-radius: 20px;">
+          <a
+              class="nav-link"
+              href="../ASign-InPage/index.html"
+              style="color: aliceblue; padding: 0 10px; align-items: center;"
+              >
+              <i class="fa fa-user " style="font-size: 20px; padding: 0 5px;"></i>
+              Login</a>
+        </li>
+      </div>
+    </div>
+  </nav>
+
+  <br><br><br>
+
+
+  <!-- Contact Section -->
+  <section class="contact-container">
+    <h1 class="contact-heading">Meet the Developers</h1>
+    <p class="contact-message">
+      We're a team of passionate students building Eventra with love, code, and a lot of coffee. Feel free to reach out or drop a message — we’d love to hear from you!
+    </p>
+
+    <div class="developer-grid">
+      <!-- Developer Cards -->
+      <div class="contact-card">
+        <img src="images/crystal.jpg" class="profile-img" onclick="showImage(this.src)">
+        <h5>Crystal Karki</h5>
+        <p>Email: crystalkarki908@gmail.com</p>
+        <p>Phone: 9748294266</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:crystalkarki908@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <img src="images/samit.jpg" class="profile-img" onclick="showImage(this.src)">
+        <h5>Samit Shrestha</h5>
+        <p>Email: shresthasamit40@gmail.com</p>
+        <p>Phone: 9766919356</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:shresthasamit40@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <img src="images/bijay.jpg" class="profile-img" onclick="showImage(this.src)">
+        <h5>Bijay Muktan</h5>
+        <p>Email: bijayamuktan63@gmail.com</p>
+        <p>Phone: 9817296547</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:bijayamuktan63@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <img src="images/susan.jpg" class="profile-img" onclick="showImage(this.src)">
+        <h5>Susan Limbu</h5>
+        <p>Email: susankhebang014@gmail.com</p>
+        <p>Phone: 9815953839</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:susankhebang014@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form-section mt-5">
+      <h4 class="text-center text-white mb-4">Send Us a Message</h4>
+      <form>
+        <input type="text" class="form-control" placeholder="Your Name" required />
+        <input type="email" class="form-control" placeholder="Your Email" required />
+        <textarea class="form-control" placeholder="Your Message" rows="5" required></textarea>
+        <div class="text-center">
+          <button type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Image Preview Modal -->
+  <div id="img-preview-modal" onclick="closeImage()">
+    <span>&times;</span>
+    <img src="" id="modal-img" alt="Preview" />
+  </div>
+
+  <!-- Footer -->
+ <footer>
+    <p>&copy; 2025 Eventra. All rights reserved.</p>
+    <p>Your one-stop platform for event discovery and hosting.</p>
+    <div>
+      <a href="index.html">Home</a> |
+      <a href="events.html">Events</a> |
+      <a href="login.html">Login</a> |
+      <a href="host-login.html">Host Login</a>
+    </div>
+  </footer>
+
+
+  <!-- JS -->
+  <script>
+    function showImage(src) {
+      document.getElementById('modal-img').src = src;
+      document.getElementById('img-preview-modal').style.display = 'flex';
+    }
+    function closeImage() {
+      document.getElementById('img-preview-modal').style.display = 'none';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

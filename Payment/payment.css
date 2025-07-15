@@ -1,0 +1,129 @@
+ .ticket-container {
+      max-width: 500px;
+      margin: 90px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 3px 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .ticket-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .ticket-info p {
+      margin: 6px 0;
+      font-size: 15px;
+      color: #555;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .proceed-btn {
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #61bb46;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .proceed-btn:hover {
+      background-color: #4fa33d;
+    }
+.confirmation-box {
+      max-width: 500px;
+      margin: 80px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .confirmation-box h2 {
+      color: #4caf50;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-box p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .confirmation-box a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #61bb46;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .confirmation-box a:hover {
+      background-color: #4fa33d;
+    }
+.payment-container {
+      max-width: 500px;
+      margin: 100px auto 60px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .payment-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .payment-summary {
+      margin-bottom: 30px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .esewa-btn {
+      background-color: #61bb46;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .esewa-btn:hover {
+      background-color: #4fa33d;
+    }

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Purna Rai Concert",
+    "name": "Purna Rai ",
     "price": 800,
     "description": "A vibrant folk-pop collective known for their catchy tunes and energetic live performances, blending traditional Nepali sounds with modern melodies.",
     "location": "Roadhouse Cafe, Thamel, Kathmandu",
@@ -61,7 +61,7 @@
     "description": "An instrumental folk ensemble creating mesmerizing soundscapes exclusively with traditional Nepali instruments, offering a unique and authentic musical experience.",
     "location": "Lazimpat, Kathmandu",
     "photo": "../images/kutumba.jpg",
-    "tag": "Acoustic Night",
+    "tag": "Acoustic",
     "time": "7PMto8:30PM",
     "date": "2025-08-08"
   },

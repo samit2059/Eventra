@@ -1,0 +1,76 @@
+.dashboard-container {
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-header h2 {
+      margin: 0;
+    }
+
+    .create-btn {
+      padding: 10px 18px;
+      background-color: #61bb46;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .create-btn:hover {
+      background-color: #4fa33d;
+    }
+
+    .event-list {
+      border-top: 1px solid #ddd;
+    }
+
+    .event-item {
+      padding: 20px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .event-item h3 {
+      margin: 0 0 6px;
+    }
+
+    .event-item p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .event-actions {
+      margin-top: 10px;
+    }
+
+    .event-actions button {
+      padding: 6px 12px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .edit-btn {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #e53935;
+      color: white;
+    }
