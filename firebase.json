@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "mainEvent",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
