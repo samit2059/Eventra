@@ -1,26 +1,45 @@
-console.log("Loading to Payment facilities");
-const processBtn = document.getElementById('process');
-const EsewaBtn = document.getElementById('esewa-btn');
-const ticket = document.getElementsByClassName('ticket-container')[0];
-const Confirmation = document.getElementsByClassName('confirmation-box')[0];
-const payment = document.getElementsByClassName('payment-container')[0];
-processBtn.addEventListener('click', (e) =>{
-    e.preventDefault();
-    console.log("ProcessBtn")
-  // Check if the element exists before trying to access its style
-        ticket.style.display = 'none';
-        payment.style.display = 'block';
-        Confirmation.style.display = 'none'; 
+// Helper: Generate UUID (unique transaction ID)
+function generateUUID() {
+  return 'xxxxxxxyxxxy4xxxyxxxyxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0;
+    return r.toString(16);
+  });
+}
+
+// Update total and form fields
+const quantityInput = document.getElementById('quantity');
+const totalDisplay = document.getElementById('total');
+const amountField = document.getElementById('amount');
+const totalAmountField = document.getElementById('total_amount');
+const transactionUUIDField = document.getElementById('transaction_uuid');
+const signatureField = document.getElementById('signature');
+const payBtn = document.getElementById('payBtn');
+
+const PRICE_PER_TICKET = 500;
+
+// Update price and signature on quantity change
+quantityInput.addEventListener('input', () => {
+  const quantity = parseInt(quantityInput.value) || 1;
+  const total = quantity * PRICE_PER_TICKET;
+
+  totalDisplay.innerText = total;
+  amountField.value = total;
+  totalAmountField.value = total;
 });
-EsewaBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    console.log('EsewaBtn clicked');
-    ticket.style.display = 'none';
-    payment.style.display = 'none';
-    Confirmation.style.display = 'block'; 
-})
-  function updateTotal() {
-      const quantity = document.getElementById("quantity").value;
-      const total = 1000 * parseInt(quantity || 1);
-      document.getElementById("total").innerText = "Total: NPR " + total;
-    }
+
+// Handle eSewa payment logic
+payBtn.addEventListener('click', () => {
+  const uuid = generateUUID();
+  transactionUUIDField.value = uuid;
+
+  const totalAmount = totalAmountField.value;
+
+  const signedData = `total_amount=${totalAmount},transaction_uuid=${uuid},product_code=EPAYTEST`;
+
+  // Sign it using SHA256 (CryptoJS must be loaded)
+  const hash = CryptoJS.SHA256(signedData).toString();
+  signatureField.value = hash;
+
+  // Now submit form
+  document.getElementById('esewaForm').submit();
+});
