@@ -56,33 +56,115 @@
   </div>
 </nav>
 <!-- Host Dashboard -->
-  <div class="dashboard-container">
-    <div class="dashboard-header">
-      <h2>Your Events</h2>
-      <a href="HostEventForm.html" class="create-btn">+ Create New Event</a>
+<div class="dashboard-wrapper">
+  
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h2>Host Overview</h2>
+      <p>Manage your events and track attendee statistics.</p>
     </div>
-    <div class="event-list">
-      <div class="event-item">
-        <h3>Live Music Concert</h3>
-        <p>📅 Date: 2025-08-20</p>
-        <p>📍 Location: Bhrikutimandap, Kathmandu</p>
-        <div class="event-actions">
-          <button class="edit-btn">Edit</button>
-          <button class="delete-btn">Delete</button>
-        </div>
-      </div>
+    <a href="HostEventForm.html" class="create-btn"><i class="fa fa-plus"></i> Create New Event</a>
+  </div>
 
-      <div class="event-item">
-        <h3>Food Festival</h3>
-        <p>📅 Date: 2025-09-05</p>
-        <p>📍 Location: Lalitpur</p>
-        <div class="event-actions">
-          <button class="edit-btn">Edit</button>
-          <button class="delete-btn">Delete</button>
-        </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(97, 187, 70, 0.1); color: #61bb46;">
+        <i class="fa fa-calendar-check-o"></i>
+      </div>
+      <div class="stat-details">
+        <h3>2</h3>
+        <p>Active Events</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(25, 118, 210, 0.1); color: #1976d2;">
+        <i class="fa fa-users"></i>
+      </div>
+      <div class="stat-details">
+        <h3>1,450</h3>
+        <p>Total Attendees</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(245, 124, 0, 0.1); color: #f57c00;">
+        <i class="fa fa-line-chart"></i>
+      </div>
+      <div class="stat-details">
+        <h3>15k</h3>
+        <p>Page Views</p>
       </div>
     </div>
   </div>
+
+  <div class="events-section-header">
+    <h3>Your Events</h3>
+    <div class="filter-group">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Upcoming</button>
+      <button class="filter-btn">Past</button>
+    </div>
+  </div>
+
+  <div class="event-grid">
+    <!-- Event Card 1 -->
+    <div class="event-card">
+      <div class="event-image">
+        <span class="status-badge upcoming">Upcoming</span>
+        <img src="https://images.unsplash.com/photo-1540039155732-d6749b1a8ebd?q=80&w=800&auto=format&fit=crop" alt="Live Music Concert">
+      </div>
+      <div class="event-content">
+        <h4>Live Music Concert</h4>
+        <div class="event-meta">
+          <span><i class="fa fa-calendar"></i> Aug 20, 2025</span>
+          <span><i class="fa fa-map-marker"></i> Bhrikutimandap</span>
+        </div>
+        <p class="event-desc">Experience an unforgettable night of electrifying performances and live music from top artists across the country.</p>
+        <div class="event-footer">
+          <div class="attendee-count">
+            <div class="avatars">
+              <img src="https://ui-avatars.com/api/?name=Samit&background=1976d2&color=fff&size=50" alt="Attendee">
+              <img src="https://ui-avatars.com/api/?name=User&background=61bb46&color=fff&size=50" alt="Attendee">
+              <img src="https://ui-avatars.com/api/?name=John&background=f57c00&color=fff&size=50" alt="Attendee">
+            </div>
+            <span>+1.2k going</span>
+          </div>
+          <div class="event-actions">
+            <button class="icon-btn edit-btn" title="Edit"><i class="fa fa-pencil"></i></button>
+            <button class="icon-btn delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Card 2 -->
+    <div class="event-card">
+      <div class="event-image">
+        <span class="status-badge draft">Draft</span>
+        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" alt="Food Festival">
+      </div>
+      <div class="event-content">
+        <h4>Food Festival</h4>
+        <div class="event-meta">
+          <span><i class="fa fa-calendar"></i> Sep 05, 2025</span>
+          <span><i class="fa fa-map-marker"></i> Lalitpur</span>
+        </div>
+        <p class="event-desc">A culinary journey featuring over 50 local vendors, food trucks, and celebrity chefs in the heart of Lalitpur.</p>
+        <div class="event-footer">
+          <div class="attendee-count">
+            <div class="avatars">
+              <span class="no-attendees">No attendees yet</span>
+            </div>
+          </div>
+          <div class="event-actions">
+            <button class="icon-btn edit-btn" title="Edit"><i class="fa fa-pencil"></i></button>
+            <button class="icon-btn delete-btn" title="Delete"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <br>
  <footer>
     <p>&copy; 2025 Eventra. All rights reserved.</p>

@@ -1,238 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EVENTRA - event-details</title>
-      <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="footer.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra - Event Details</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
+  
+  <link rel="stylesheet" href="event.css" />
+  <style>
+    /* Premium Detail Layout */
+    .event-banner {
+      position: relative;
+      height: 50vh;
+      min-height: 400px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: flex-end;
+      padding: 0;
+      margin-top: 80px;
+    }
+    
+    .banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--background) 0%, rgba(11,17,38,0.2) 100%);
+    }
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+    .event-header-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      padding-bottom: 20px;
+    }
 
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+    .event-tag {
+      background: var(--primary);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
 
-      .banner {
-        background: url("../images/Main_nepathya.jpg") center/cover no-repeat;
-        height: 450px;
-        margin-top: 67px;
-      }
-      .container1 {
-        padding: 2rem;
-      }
-      .event-info {
-        margin-top: 1.5rem;
-      }
-      .event-info h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-      }
-      .event-meta {
-        color: #555;
-        margin-bottom: 1rem;
-      }
-      .btn-group {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-      .btn {
-        padding: 0.5rem 1rem;
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-      }
-      .fixed-top-navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1030; /* Bootstrap's default z-index for fixed-top is 1030 */
-      }
-      .m2 ul {
-        list-style-type: disc; /* list-disc */
-        list-style-position: inside; /* list-inside */
-        text-align: left; /* text-left */
-        font-size: 16px;
-        color: #4a5568; /* text-gray-700 */
+    .event-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 50px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin: 0 0 10px 0;
+      line-height: 1.2;
+    }
 
-        padding-left: 0; /* remove default padding */
-      }
-      .m2 ul li {
-        padding: 0.5rem; /* p-2 */
-        background-color: #f1f5fa; /* bg-gray-50 */
-        margin-bottom: 0.5rem; /* space-y-2 equivalent */
-      }
-    </style>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <nav
-      class="navbar navbar-expand-lg fixed-top justify-center"
-      style="background-color: #0b1126; padding-top: 15px"
-    >
-      <div class="container">
-        <a
-          class="navbar-brand p-1"
-          href="event.html"
-          style="color: aliceblue; font-weight: bold; font-size: 24px"
-          ><img
-            src="../images/Logo1.png"
-            width="30"
-            height="30"
-            style="margin: 0 5px"
-            alt=""
-          />Eventra</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse"
-          id="navbarSupportedContent"
-          style="font-family: Open sans"
-        >
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" style="padding: 0 20px 0 40px">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="../mainEvent/event.html"
-                style="color: aliceblue"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/contact_us.html" style="color: aliceblue"
-                >Contact Us</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a
-                class="nav-link"
-                href="../Host-event/HostEventForm.html"
-                style="color: aliceblue"
-                >Host-Event</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/about_us.html" style="color: aliceblue">About Us</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search" style="font-family: Open sans">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
-          <li
-            class="nav-item d-flex"
-            style="
-              padding: 15px 5px;
-              background-color: #ed3d0c;
-              border-radius: 20px;
-              padding: 5px 0;
-              align-items: center;
-              font-family: Open sans;
-            "
-          >
-            <a
-              class="nav-link"
-              href="../ASign-InPage/index.html"
-              style="color: aliceblue; padding: 0 10px; align-items: center"
-            >
-              <i class="fa fa-user" style="font-size: 20px; padding: 0 5px"></i>
-              Login</a
-            >
-          </li>
-        </div>
-      </div>
-    </nav>
-    <div class="banner"></div>
-    <div class="container1">
-      <div class="event-info">
-        <h1>Nepathya Concert</h1>
-        <p class="event-meta">
-          📅 July 25, 2025 | 🕒 5:00 PM - 8:00 PM | 📍 Baneshwor, KTM
-        </p>
-        <p>
-          Get ready for an extraordinary musical journey as Nepathya, Nepal's
-          most revered folk-rock band, takes the stage for an unforgettable live
-          concert! This highly anticipated event promises an immersive
-          experience where their iconic melodies, deeply rooted in Nepali folk
-          traditions yet infused with contemporary rock energy, will resonate
-          through the venue. Attendees can look forward to a powerful and
-          soulful performance, celebrating Nepathya's rich musical legacy and
-          their unique ability to connect with audiences through their poignant
-          lyrics and captivating stage presence. It's an absolute must-attend
-          for anyone who appreciates authentic Nepali music and a truly
-          memorable concert atmosphere.
-        </p>
-        <div class="btn-group">
-          <a href="#" class="btn bg-primary" style="border-radius: 6px"
-            >Register</a
-          >
-          <a href="#" class="btn bg-primary" style="border-radius: 6px"
-            >Share</a
-          >
-        </div>
-      </div>
-      <div class="m2">
-        <div>
-          <h2>Expected Songs to be Performed:</h2>
-          <ul>
-            <li>Resham Firiri</li>
-            <li>Chekyo Chekyo</li>
-            <li>Bhedako Oon Jasto</li>
-            <li>Chari Maryo</li>
-            <li>Jogi</li>
-            <li>Yo Zindagani</li>
-            <li>Sirful</li>
-            <li>Sa Karnali</li>
-            <li>Malai Maaf Gara</li>
-            <li>Pahilo Junima</li>
-          </ul>
-        </div>
+    .event-meta {
+      display: flex;
+      gap: 20px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 16px;
+      flex-wrap: wrap;
+    }
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .event-meta i {
+      color: var(--primary);
+    }
+
+    /* Main Grid Layout */
+    .details-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .details-container { grid-template-columns: 1fr; }
+      .event-title { font-size: 36px; }
+    }
+
+    .main-description {
+      background: var(--surface);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .main-description h2 {
+      color: var(--secondary);
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .main-description p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ticket-card {
+      background: var(--surface);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid var(--primary);
+      box-shadow: 0 10px 30px rgba(237, 61, 12, 0.1);
+      position: sticky;
+      top: 100px;
+      text-align: center;
+    }
+
+    .ticket-price {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 5px;
+    }
+    .ticket-price-label {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .buy-btn-large {
+      display: block;
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 18px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(237, 61, 12, 0.2);
+    }
+
+    .buy-btn-large:hover {
+      background: var(--primary-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(237, 61, 12, 0.3);
+      color: white;
+    }
+
+    .share-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      color: var(--secondary);
+      border: 2px solid var(--border);
+      text-align: center;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-top: 15px;
+    }
+    .share-btn:hover {
+      background: var(--border);
+    }
+    
+    .error-splash {
+      text-align: center;
+      padding: 100px 20px;
+      color: var(--text-muted);
+    }
+    .error-splash h1 { color: #dc2626; margin-bottom: 10px;}
+  </style>
+</head>
+<body>
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="nav-brand" href="event.html">
+        <img src="../images/Logo1.png" alt="Eventra Logo">
+        Eventra
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="event.html">Home</a></li>
+        <li><a href="contact_us.html">Contact Us</a></li>
+        <li><a href="../Host-event/HostEventForm.html">Host Event</a></li>
+        <li><a href="about_us.html">About Us</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- We use the class login-btn so our script can dynamically update it safely -->
+        <a href="../ASign-InPage/index.html" class="login-btn"><i class="fa fa-user"></i> Login</a>
       </div>
     </div>
-    <footer>
-      <p>&copy; 2025 Eventra. All rights reserved.</p>
-      <p>Your one-stop platform for event discovery and hosting.</p>
-      <div>
-        <a href="../mainEvent/event.html">Home</a> | <a href="../mainEvent/event.html">Events</a> |
-        <a href="../ASign-InPage/index.html">Login</a> |
-        <a href="#">Host Login</a>
-      </div>
-    </footer>
+  </nav>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <div id="dynamicContent">
+    <div class="error-splash">
+      <h1><i class="fas fa-spinner fa-spin"></i> Loading Event...</h1>
+    </div>
+  </div>
+
+  <!-- Premium Footer -->
+  <footer class="premium-footer" style="margin-top:60px;">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3><img src="../images/Logo1.png" width="30"> Eventra</h3>
+        <p>Your one-stop platform for event discovery and hosting across Nepal. Making memories happen.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="event.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="contact_us.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>For Hosts</h4>
+        <a href="../Host-event/HostEventForm.html">Host an Event</a>
+        <a href="../Host-event/Host_dashboard.html">Host Dashboard</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Eventra. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Navigation Toggle handled natively for simple pages
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('mobile-active');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (navLinks.classList.contains('mobile-active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Global Auth Navbar Update
+    document.addEventListener("DOMContentLoaded", function() {
+        const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+        if(activeUser) {
+            const loginBtns = document.querySelectorAll('.login-btn');
+            loginBtns.forEach(btn => {
+                btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+                btn.href = "../mainEvent/profile.html"; 
+                btn.style.background = "var(--secondary)";
+            });
+        }
+    });
+
+    async function loadEventDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchName = urlParams.get('name');
+        
+        const contentArea = document.getElementById('dynamicContent');
+        
+        if(!searchName) {
+            contentArea.innerHTML = `<div class="error-splash"><h1>Event Not Found</h1><p>No event mapping was provided in the URL.</p><a href="event.html" class="share-btn" style="max-width: 200px; margin: 20px auto;">Back to Home</a></div>`;
+            return;
+        }
+
+        let allEvents = [];
+        try {
+            const response = await fetch('list.json');
+            if (response.ok) {
+                allEvents = await response.json();
+            }
+        } catch (e) {
+            console.error("Failed JSON", e);
+        }
+
+        const customEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+        allEvents = [...allEvents, ...customEvents];
+        
+        const ev = allEvents.find(e => e.name === searchName);
+
+        if(!ev) {
+            contentArea.innerHTML = `<div class="error-splash"><h1>Event Removed</h1><p>This event could not be found internally. It may have been deleted.</p><a href="event.html" class="share-btn" style="max-width: 200px; margin: 20px auto;">Back to Home</a></div>`;
+            return;
+        }
+
+        const ePhoto = ev.photo || '../images/Main_carnival.jpg';
+        const eTag = ev.tag || ev.category || 'Event';
+        const eDesc = ev.description || "Join us for an unforgettable experience! This event promises amazing activities, great networking, and exceptional memories. Ensure you book your tickets early as slots are highly limited.";
+        const eLoc = ev.location || "TBD";
+        const eDate = ev.date || "TBD";
+        const ePrice = ev.price || "500";
+        const isFree = ePrice.toString().toLowerCase() === "free";
+        const displayPrice = isFree ? "Free" : "Rs. " + ePrice;
+        
+        const paymentLink = `../Payment/payment.html?name=${encodeURIComponent(ev.name)}&price=${encodeURIComponent(ePrice)}&date=${encodeURIComponent(eDate)}`;
+
+        contentArea.innerHTML = `
+          <header class="event-banner" style="background-image: url('${ePhoto}');">
+            <div class="banner-overlay"></div>
+          </header>
+          
+          <div class="event-header-content">
+              <span class="event-tag">${eTag}</span>
+              <h1 class="event-title">${ev.name}</h1>
+              <div class="event-meta">
+                  <span><i class="fas fa-calendar-alt"></i> ${eDate}</span>
+                  <span><i class="fas fa-map-marker-alt"></i> ${eLoc}</span>
+              </div>
+          </div>
+
+          <main class="details-container">
+            <section class="main-description">
+              <h2>About this Event</h2>
+              <p>${eDesc}</p>
+              
+              <div style="margin-top: 40px; padding: 20px; background: rgba(97, 187, 70, 0.1); border-left: 4px solid var(--accent); border-radius: 8px;">
+                 <strong style="color: var(--secondary);"><i class="fas fa-shield-alt"></i> Official Eventra Verified</strong>
+                 <p style="margin:0; margin-top:5px; font-size:14px;">This event listing is protected under Eventra's secure hosting environment. Tickets purchased here are digitally native and immune to scalping.</p>
+              </div>
+            </section>
+            
+            <aside class="sidebar-actions">
+               <div class="ticket-card">
+                  <div class="ticket-price">${displayPrice}</div>
+                  <div class="ticket-price-label">Base Price per Ticket</div>
+                  
+                  <a href="${paymentLink}" class="buy-btn-large">Buy Ticket Now</a>
+                  <a href="#" onclick="alert('Event link copied to clipboard!'); return false;" class="share-btn"><i class="fas fa-share-alt"></i> Share Event</a>
+               </div>
+            </aside>
+          </main>
+        `;
+    }
+
+    // Call Immediately
+    loadEventDetails();
+  </script>
+</body>
 </html>

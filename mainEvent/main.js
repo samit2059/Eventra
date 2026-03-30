@@ -1,190 +1,121 @@
-// const initApp = () => {
-//     // get data product
-//     fetch('list.json')
-//     .then(response => response.json())
-//     .then(data => {
-//         products = data;
-//         addDataToHTML();
+// main.js - Upgraded for Fully Functional Dynamics
 
-//         // get data cart from memory
-//         if(localStorage.getItem('cart')){
-//             cart = JSON.parse(localStorage.getItem('cart'));
-//             addCartToHTML();
-//         }
-//     })
-// }
-// initApp();
+async function displayEvents() {
+    const eventsContainer = document.getElementById('events');
+    eventsContainer.innerHTML = '';
 
-function displayEvents() {
-    fetch('list.json')
-        .then((response) => {
-            if (!response.ok)
-                console.log(response);
-            return response.json();
-        })
-        .then((data1) => {
-            const events = document.getElementById('events')
-            events.innerHTML = '';
+    // 1. Fetch default events from JSON
+    let allEvents = [];
+    try {
+        const response = await fetch('list.json');
+        if (response.ok) {
+            const data = await response.json();
+            allEvents = data;
+        }
+    } catch (e) {
+        console.error('Failed to load local json:', e);
+    }
 
-            data1.forEach((data) => {
-                const li = document.createElement('li');
-                li.innerHTML = `<div class="card" style="width: 18rem; margin:20px 20px 0 0; border-radius: 10px position: relative;" >
-<div class='card-head' style="position: relative">
-  <a href='../mainEvent/eventdetail.html'><img src='${data.photo}' class="card-img-top" alt="..." width='100' height = '250' style="object-fit: cover;"></a>
-  <div style="border:1px solid black; position: absolute; bottom: 5%; left: 60%; transform: translate(0, -50%);white-space: nowrap; "><a href = "#" class= "btn btn rounded-4 mx-0"style="position: absolute; background-color:orange; font-size: 14px">${data.tag}</a></div>
-</div>
-  <div class="card-body">
-    <h5 class="card-title" style="color: rgba(17, 13, 8, 0.712);">${data.name}</h5>
-    <div style="padding: 0 0px; align-items: center; justify-content: left; display: flex;"><span class="material-symbols-outlined" style="color: #30b964ff">calendar_month</span><span style="font-size: 12px">${data.date}</span></div>
-    <p class="card-text"style="font-size: 12px"><img src="../images/looc1.png" alt="none" style="background-color:transparent; ">:${data.location}</p>
-    <div style="font-size: 14px">Buy:<a href="../Payment/payment.html" class="btn btn-success  rounded-3 mx-2 " >Rs .${data.price}</a></div>
-  </div>
-</div>`
-                events.appendChild(li);
-            })
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+    // 2. Fetch custom Hosted events from LocalStorage
+    const customEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+    allEvents = [...allEvents, ...customEvents]; // Merge them!
+
+    // Save global master copy for search
+    window.masterEventList = allEvents;
+
+    renderCards(allEvents);
 }
 
+function renderCards(eventArray) {
+    const eventsContainer = document.getElementById('events');
+    eventsContainer.innerHTML = '';
+
+    if(eventArray.length === 0) {
+        eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-calendar-times-o" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events available.</div>';
+        return;
+    }
+
+    eventArray.forEach((data) => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'event-card';
+        cardDiv.innerHTML = `
+            <div class="card-image-wrapper">
+                <span class="card-tag">${data.tag || data.category}</span>
+                <a href="../mainEvent/eventdetail.html?name=${encodeURIComponent(data.name)}"><img src="${data.photo || '../images/Main_carnival.jpg'}" alt="${data.name}" style="width: 100%; height: 200px; object-fit: cover;"></a>
+            </div>
+            <div class="card-content">
+                <h3>${data.name}</h3>
+                <div class="card-info">
+                    <i class="fa fa-calendar"></i>
+                    <span>${data.date}</span>
+                </div>
+                <div class="card-info" style="margin-bottom: 20px;">
+                    <i class="fa fa-map-marker"></i>
+                    <span>${data.location}</span>
+                </div>
+                <div class="card-footer">
+                    <span class="price">Rs. ${data.price || '500'}</span>
+                    <a href="../Payment/payment.html?name=${encodeURIComponent(data.name)}&price=${encodeURIComponent(data.price || '500')}&date=${encodeURIComponent(data.date)}" class="buy-btn">Buy Ticket</a>
+                </div>
+            </div>
+        `;
+        eventsContainer.appendChild(cardDiv);
+    });
+}
+
+// Ensure the page fetches everything on load
 displayEvents();
 
+// Upgrade Search Functionality to correctly filter both standard and custom events
 const searchInputField = document.getElementById('searchValue');
 const searchButton = document.getElementById('search');
-//   const currentSearchValue = searchInputField.value.toLowerCase().trim(); // Use a clear variable name
-searchButton.addEventListener('click', () => {
-    console.log('Search button clicked');
+
+searchButton.addEventListener('click', (e) => {
+    e.preventDefault(); 
     const searchValue = searchInputField.value.toLowerCase().trim();
-    // If the search input is empty, display all events.
+    
     if (searchValue === '') {
-        displayEvents();
-        console.log('search bar is empty')
-        return; // Exit the function
+        renderCards(window.masterEventList);
+        return;
     }
-    fetch('list.json')
-        .then((response) => {
-            if (!response.ok)
-                console.log(response);
-            return response.json();
-        })
-        .then((data1) => {
-            const events = document.getElementById('events')
-            events.innerHTML = '';
-            let resultsFound = false;
-            console.log('data loaded for search');
-            // console.log(searchInputField)
-            console.log(`searchValue: ${searchValue}`);
 
-            data1.forEach((data) => {
-                if (data.tag.toLowerCase().includes(searchValue) || data.name.toLowerCase().includes(searchValue)) {
-                    resultsFound = true;
-                    console.log(data.tag)
-                    console.log(`Match found: Tag="${data.tag}", Name="${data.name}"`);
+    // Filter instantly from the merged master list
+    const filtered = window.masterEventList.filter(data => {
+        const nameMatch = (data.name || '').toLowerCase().includes(searchValue);
+        const tagMatch = (data.tag || data.category || '').toLowerCase().includes(searchValue);
+        const locMatch = (data.location || '').toLowerCase().includes(searchValue);
+        return nameMatch || tagMatch || locMatch;
+    });
 
-                    const li = document.createElement('li');
-                    li.innerHTML = `<div class="card" style="width: 18rem; margin:20px 20px 0 0; border-radius: 10px position: relative;" >
-                <div class='card-head' style="position: relative">
-                <a href='../mainEvent/eventdetail.html'><img src='${data.photo}' class="card-img-top" alt="..." width='100' height = '250' style="object-fit: cover;"></a>
-                <div style="border:1px solid black; position: absolute; bottom: 5%; left: 60%; transform: translate(0, -50%);white-space: nowrap; "><a href = "#" class= "btn btn rounded-4 mx-0"style="position: absolute; background-color:orange; font-size: 14px">${data.tag}</a></div>
-</div>
-  <div class="card-body">
-  <h5 class="card-title" style="color: rgba(17, 13, 8, 0.712);">${data.name}</h5>
-    <div style="padding: 0 0px; align-items: center; justify-content: left; display: flex;"><span class="material-symbols-outlined" style="color: #30b964ff">calendar_month</span><span style="font-size: 12px">${data.date}</span></div>
-    <p class="card-text"style="font-size: 12px"><img src="../images/looc1.png" alt="none" style="background-color:transparent; ">:${data.location}</p>
-    <div style="font-size: 14px">Buy:<a href="../Payment/payment.html" class="btn btn-success  rounded-3 mx-2 " >Rs .${data.price}</a></div>
-  </div>
-  </div>`
-                    events.appendChild(li);
-                }
-                console.log('tag unloaded');
-            });
-            if (!resultsFound) {
-                events.innerHTML = '<p style="text-align: center; margin-top: 50px; color: #555;">No events found matching your search.</p>';
-                setTimeout(() => {
-                    events.innerHTML = '';
-                    displayEvents();
-                }, 5000);
-            }
-        })
-
-        .catch((error) => {
-            console.error('Error during search data processing:', error);
-            document.getElementById('events').innerHTML = '<p style="text-align: center; margin-top: 50px; color: red;">Error processing search results.</p>';
-        });
+    if(filtered.length > 0) {
+        renderCards(filtered);
+    } else {
+        const eventsContainer = document.getElementById('events');
+        eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-search" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events found matching your search.</div>';
+        setTimeout(() => {
+            renderCards(window.masterEventList);
+            searchInputField.value = '';
+        }, 3000);
+    }
 });
 
+// Update global navbar to reflect authentication
+function updateGlobalNavbar() {
+    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    const allNavLogins = document.querySelectorAll('.login-btn');
+    
+    allNavLogins.forEach(btn => {
+        if(activeUser) {
+            btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+            btn.href = "../ASign-InPage/index.html"; 
+            btn.style.background = "var(--secondary)";
+        } else {
+            btn.innerHTML = `<i class="fa fa-user"></i> Login`;
+            btn.href = "../ASign-InPage/index.html";
+            btn.style.background = "var(--primary)";
+        }
+    });
+}
 
-// const searchInputField = document.getElementById('searchValue');
-// const searchButton = document.getElementById('search'); // Corrected variable name
-
-// // Removed the redundant currentSearchValue declaration here:
-// // const currentSearchValue = searchInputField.value.toLowerCase().trim(); // This line was problematic
-
-// searchButton.addEventListener('click', () => {
-//     console.log('Search button clicked'); // More accurate log
-
-//     // Get the search value from the input field INSIDE the event listener
-//     const searchValue = searchInputField.value.toLowerCase().trim();
-
-//     // If the search input is empty, re-display all events using the initial function.
-//     if (searchValue === '') {
-//         displayEvents(); // This will re-fetch and display all events
-//         console.log('Search bar is empty, re-displaying all events.');
-//         return; // Exit the function early
-//     }
-
-//     // Fetch data for the search (as requested, keeping fetch inside listener)
-//     fetch('list.json')
-//         .then((response) => {
-//             if (!response.ok) {
-//                 console.error('Network response was not ok for search:', response.statusText);
-//                 return Promise.reject('Network error during search'); // Propagate error
-//             }
-//             return response.json();
-//         })
-//         .then((data1) => {
-//             const events = document.getElementById('events');
-//             events.innerHTML = ''; // Clear previous search results
-
-//             let resultsFound = false; // Flag to track if any events match the search
-
-//             console.log('Data loaded for search.');
-//             // console.log(searchInputField); // This logs the HTML input element, not its value
-//             console.log(`Searching for tag/name containing: "${searchValue}"`); // Log the actual search term
-
-//             data1.forEach((data) => {
-//                 // Corrected condition: Check if tag OR name includes the searchValue (case-insensitive)
-//                 // data.tag is already a string, so no .value needed.
-//                 if (data.tag.toLowerCase().includes(searchValue) || data.name.toLowerCase().includes(searchValue)) {
-//                     resultsFound = true; // Mark that at least one result was found
-//                     console.log(`Match found: Tag="${data.tag}", Name="${data.name}"`);
-
-//                     const li = document.createElement('li');
-//                     li.innerHTML = `<div class="card" style="width: 18rem; margin:20px 20px 0 0; border-radius: 10px; position: relative;" >
-// <div class='card-head' style="position: relative">
-//   <a href='../mainEvent/eventdetail.html'><img src='${data.photo}' class="card-img-top" alt="..." width='100' height = '250' style="object-fit: cover;"></a>
-//   <div style="border:1px solid black; position: absolute; bottom: 5%; left: 60%; transform: translate(0, -50%);white-space: nowrap; "><a href = "#" class= "btn btn rounded-4 mx-0"style="position: absolute; background-color:orange; font-size: 14px">${data.tag}</a></div>
-// </div>
-//   <div class="card-body">
-//     <h5 class="card-title" style="color: rgba(17, 13, 8, 0.712);">${data.name}</h5>
-//     <div style="padding: 0 0px; align-items: center; justify-content: left; display: flex;"><span class="material-symbols-outlined" style="color: #30b964ff">calendar_month</span><span style="font-size: 12px">${data.date}</span></div>
-//     <p class="card-text"style="font-size: 12px"><img src="../images/looc1.png" alt="none" style="background-color:transparent; ">:${data.location}</p>
-//     <div style="font-size: 14px">Buy:<a href="../Payment/payment.html" class="btn btn-success  rounded-3 mx-2 " >Rs .${data.price}</a></div>
-//   </div>
-// </div>`;
-//                     events.appendChild(li);
-//                 }
-//                 // console.log('tag unloaded'); // This log is misleading, removed or refined
-//             });
-
-//             // Display a message if no results were found
-//             if (!resultsFound) {
-//                 events.innerHTML = '<p style="text-align: center; margin-top: 50px; color: #555;">No events found matching your search.</p>';
-//             }
-//         })
-//         .catch((error) => {
-//             console.error('Error during search data processing:', error);
-//             document.getElementById('events').innerHTML = '<p style="text-align: center; margin-top: 50px; color: red;">Error processing search results.</p>';
-//         });
-// });
+// Call on startup
+updateGlobalNavbar();

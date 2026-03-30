@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful!</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #ed3d0c;
+      --secondary: #0b1126;
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --success: #61bb46;
+    }
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: var(--background);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .success-card {
+      background: var(--surface);
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    .icon-wrapper {
+      width: 100px;
+      height: 100px;
+      background: rgba(97, 187, 70, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      color: var(--success);
+      font-size: 50px;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--success);
+      margin-bottom: 10px;
+    }
+    p {
+      color: #64748b;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #c52f07;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="success-card">
+    <div class="icon-wrapper">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>Payment Verified!</h1>
+    <p>Your eSewa transaction was successful. The ticket has been securely added to your Account Dashboard.</p>
+    
+    <div style="background: var(--background); padding: 20px; border-radius: 12px; margin-bottom: 30px; text-align: left;">
+        <strong style="color: var(--secondary); display:block; margin-bottom: 5px;">Event Ticket:</strong>
+        <span id="evName" style="color: var(--primary); font-weight: bold;">Loading...</span>
+        <br>
+        <small id="evDate" style="color: #64748b;"></small>
+    </div>
+
+    <a href="../ASign-InPage/index.html" class="btn"><i class="fas fa-user"></i> View My Tickets</a>
+    <a href="../mainEvent/event.html" class="btn" style="background: var(--secondary); margin-left:10px;"><i class="fas fa-home"></i> Home</a>
+  </div>
+
+  <script>
+    // 1. Gather parameters from successful eSewa callback / internal url
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventName = urlParams.get('name') || "General Ticket";
+    const date = urlParams.get('date') || "TBD";
+    const price = urlParams.get('price') || "0";
+
+    document.getElementById('evName').textContent = eventName;
+    document.getElementById('evDate').textContent = date;
+
+    // 2. Locate Active User and inject ticket into their localStorage profile history!
+    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    if(activeUser) {
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+        if(users[activeUser.username]) {
+            // Push the ticket directly to their array
+            users[activeUser.username].tickets.push({
+                eventName: eventName,
+                date: date,
+                price: price
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+            console.log("Ticket successfully saved to Profile History!");
+        }
+    } else {
+        console.warn("No active user session found to assign this ticket to.");
+    }
+  </script>
+</body>
+</html>

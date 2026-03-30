@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra - My Dashboard</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
+  
+  <link rel="stylesheet" href="event.css" />
+  <style>
+    .profile-header {
+      padding: 150px 20px 60px;
+      text-align: center;
+      background: linear-gradient(to right, var(--secondary), #131d3c);
+      color: white;
+    }
+    
+    .profile-title {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .profile-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: -40px auto 100px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+      text-align: center;
+      height: fit-content;
+    }
+
+    .sidebar-avatar {
+      width: 120px;
+      height: 120px;
+      background: #f1f5f9;
+      border: 4px solid var(--background);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 50px;
+      color: var(--secondary);
+    }
+
+    .sidebar-username {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 15px;
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+      border: 2px solid #dc2626;
+      color: #dc2626;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 30px;
+    }
+
+    .logout-btn:hover {
+      background: #dc2626;
+      color: white;
+      box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .metric-card {
+      background: var(--background);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .metric-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .metric-icon.orange {
+      background: rgba(237, 61, 12, 0.1);
+      color: var(--primary);
+    }
+
+    .metric-icon.green {
+      background: rgba(97, 187, 70, 0.1);
+      color: var(--accent);
+    }
+
+    .metric-info h4 {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 5px;
+    }
+
+    .metric-info span {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .history-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .history-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      color: var(--secondary);
+    }
+
+    .ticket-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ticket-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .ticket-item:hover {
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(237, 61, 12, 0.1);
+    }
+
+    .ticket-details h4 {
+      font-size: 18px;
+      color: var(--secondary);
+      margin-bottom: 5px;
+    }
+    
+    .ticket-details span {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .ticket-price {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      background: rgba(237, 61, 12, 0.1);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+    
+    .empty-state i {
+      font-size: 50px;
+      color: #cbd5e1;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="nav-brand" href="event.html">
+        <img src="../images/Logo1.png" alt="Eventra Logo">
+        Eventra
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="event.html">Home</a></li>
+        <li><a href="contact_us.html">Contact Us</a></li>
+        <li><a href="../Host-event/HostEventForm.html">Host Event</a></li>
+        <li><a href="about_us.html">About Us</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- We use the class login-btn so our script can dynamically update it safely -->
+        <a href="../ASign-InPage/index.html" class="login-btn"><i class="fa fa-user"></i> Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <header class="profile-header">
+    <h1 class="profile-title">Personal Dashboard</h1>
+    <p class="profile-subtitle">Manage your purchased tickets securely and keep track of your hosted events seamlessly directly from your profile.</p>
+  </header>
+
+  <!-- Dashboard -->
+  <div class="dashboard-container">
+    
+    <!-- Sidebar User Profile -->
+    <aside class="sidebar">
+      <div class="sidebar-avatar">
+        <i class="fas fa-user-astronaut"></i>
+      </div>
+      <h2 class="sidebar-username" id="displayUsername">Loading...</h2>
+      <p style="color: var(--text-muted); margin-bottom: 30px;"><i class="fas fa-envelope"></i> <span id="displayEmail">user@eventra.com</span></p>
+      
+      <a href="../Host-event/HostEventForm.html" style="display: block; width: 100%; padding: 15px; background: var(--secondary); color: white; border-radius: 12px; font-weight: bold; text-decoration: none; margin-bottom: 15px;">
+        <i class="fas fa-plus-circle"></i> Host New Event
+      </a>
+      <a href="event.html" style="display: block; width: 100%; padding: 15px; background: var(--primary); color: white; border-radius: 12px; font-weight: bold; text-decoration: none;">
+        <i class="fas fa-search"></i> Discover Events
+      </a>
+      
+      <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Sign Out
+      </button>
+    </aside>
+
+    <!-- Main Analytics & Logs -->
+    <main class="main-content">
+      
+      <section class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-icon orange">
+            <i class="fas fa-ticket-alt"></i>
+          </div>
+          <div class="metric-info">
+            <h4 id="ticketCount">0</h4>
+            <span>Total Tickets Bought</span>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon green">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div class="metric-info">
+            <h4 id="hostedCount">0</h4>
+            <span>Total Events Hosted</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="history-card">
+        <h3>Recent Ticket Purchases</h3>
+        <ul class="ticket-list" id="ticketList">
+          <!-- Dynamically Injected Tickets -->
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Premium Footer -->
+  <footer class="premium-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3><img src="../images/Logo1.png" width="30"> Eventra</h3>
+        <p>Your one-stop platform for event discovery and hosting across Nepal. Making memories happen.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="event.html">Home</a>
+        <a href="about_us.html">About Us</a>
+        <a href="contact_us.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>For Hosts</h4>
+        <a href="../Host-event/HostEventForm.html">Host an Event</a>
+        <a href="../Host-event/Host_dashboard.html">Host Dashboard</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Eventra. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('mobile-active');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (navLinks.classList.contains('mobile-active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Populate Dashboard Data
+    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    
+    if(!activeUser) {
+        window.location.href = "../ASign-InPage/index.html"; // Protect route
+    } else {
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        const userData = users[activeUser.username] || { email: '', tickets: [], hosted: [] };
+        
+        document.getElementById('displayUsername').textContent = activeUser.username;
+        document.getElementById('displayEmail').textContent = userData.email || 'Verified User';
+        
+        document.getElementById('ticketCount').textContent = userData.tickets.length;
+        document.getElementById('hostedCount').textContent = userData.hosted.length;
+        
+        const ticketList = document.getElementById('ticketList');
+        if(userData.tickets.length === 0) {
+            ticketList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <h4>No Tickets Found</h4>
+                    <p>You haven't purchased any tickets yet. Explore events on the homepage!</p>
+                </div>
+            `;
+        } else {
+            userData.tickets.forEach(ticket => {
+                ticketList.innerHTML += `
+                    <li class="ticket-item">
+                      <div class="ticket-details">
+                        <h4>${ticket.eventName}</h4>
+                        <span><i class="fas fa-calendar-alt"></i> ${ticket.date || 'TBD'}</span>
+                      </div>
+                      <div class="ticket-price">
+                         Rs. ${ticket.price}
+                      </div>
+                    </li>
+                `;
+            });
+        }
+    }
+
+    // Logout Helper
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('activeUser');
+        window.location.href = "../ASign-InPage/index.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,173 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVENTRA - Payment</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="../mainEvent/footer.css">
-      <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="payment.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra - Checkout</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
+  
+  <link rel="stylesheet" href="../mainEvent/event.css" />
   <style>
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+    .checkout-container {
+      padding: 150px 20px 80px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .checkout-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .checkout-card h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+
+    .ticket-details {
+      background: var(--background);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: left;
+      margin-bottom: 30px;
+      border: 1px solid var(--border);
+    }
+
+    .ticket-details p {
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+    .ticket-details p strong {
+      color: var(--secondary);
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .quantity-control input {
+      width: 80px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .total-price {
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 800;
+      margin: 30px 0;
+    }
+
+    .esewa-btn {
+      width: 100%;
+      background: #61bb46; /* Official eSewa Green */
+      color: white;
+      border: none;
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .esewa-btn:hover {
+      background: #509e3a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(97, 187, 70, 0.3);
+    }
+
+    .login-warning {
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      display: none;
+    }
   </style>
 </head>
 <body>
-<nav
-      class="navbar navbar-expand-lg fixed-top justify-center"
-      style="background-color: #0b1126; padding-top: 15px"
-    >
-      <div class="container">
-        <a
-          class="navbar-brand p-1"
-          href="../mainEvent/event.html"
-          style="color: aliceblue; font-weight: bold; font-size: 24px"
-          ><img src="../images/Logo1.png" width="30" height="30" style="margin: 0 5px;" alt=""/>Eventra</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse"
-          id="navbarSupportedContent"
-          style="font-family: Open sans"
-        >
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" style="padding: 0 20px 0 40px">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="../mainEvent/event.html"
-                style="color: aliceblue"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/contact_us.html" style="color: aliceblue"
-                >Contact Us</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a
-                class="nav-link"
-                href="../Host-event/HostEventForm.html"
-                style="color: aliceblue"
-                >Host-Event</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/about_us.html" style="color: aliceblue">About Us</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search" style="font-family: Open sans">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
-          <li
-            class="nav-item d-flex"
-            style="
-              padding: 15px 5px;
-              background-color: #ed3d0c;
-              border-radius: 20px;
-              padding: 5px 0;
-              align-items: center;
-              font-family: Open sans;
-            "
-          >
-            <a
-              class="nav-link"
-              href="../ASign-InPage/index.html"
-              style="color: aliceblue; padding: 0 10px; align-items: center;"
-              >
-              <i class="fa fa-user " style="font-size: 20px; padding: 0 5px;"></i>
-              Login</a>
-          </li>
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="nav-brand" href="../mainEvent/event.html">
+        <img src="../images/Logo1.png" alt="Eventra Logo">
+        Eventra
+      </a>
+      <div class="nav-actions">
+           <!-- Handled natively -->
+           <a href="../ASign-InPage/index.html" class="login-btn" id="navLoginBtn"><i class="fa fa-user"></i> Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="checkout-container">
+    <div class="checkout-card" id="checkoutUI">
+      
+      <div id="loginWarning" class="login-warning">
+        <i class="fas fa-exclamation-circle"></i> You must log in to purchase a ticket! 
+        <br><br><a href="../ASign-InPage/index.html" style="color: #dc2626; text-decoration: underline;">Click here to Login</a>
+      </div>
+
+      <h2>Secure Checkout</h2>
+      <p style="color: var(--text-muted); margin-bottom: 30px;">Review your ticket details before proceeding to eSewa digital payment.</p>
+      
+      <div class="ticket-details">
+        <p><strong>Event Name:</strong> <span id="eventName">Loading...</span></p>
+        <p><strong>Event Date:</strong> <span id="eventDate">Loading...</span></p>
+        <p><strong>Base Price:</strong> <span id="eventPrice">Loading...</span></p>
+        
+        <div class="quantity-control">
+          <strong>Ticket Quantity</strong>
+          <input type="number" id="ticketQty" value="1" min="1" max="10">
         </div>
       </div>
-    </nav>
- <!-- Ticket Purchase Section -->
-  <div class="ticket-container" style="display: block;">
-    <h2>Buy Ticket</h2>
-    <div class="ticket-info">
-      <p><strong>Event:</strong> Live Music Concert 2025</p>
-      <p><strong>Date:</strong> August 20, 2025</p>
-      <p><strong>Location:</strong> Bhrikutimandap, Kathmandu</p>
-      <p><strong>Price:</strong> NPR 1000 per ticket</p>
+
+      <div class="total-price" id="totalDisplay">Total: Rs. 0</div>
+
+      <!-- Modern eSewa V2 API Payment Form -->
+      <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST" id="esewaForm">
+        <input type="hidden" id="esewaAmt" name="amount" value="0" required>
+        <input type="hidden" id="tax_amount" name="tax_amount" value="0" required>
+        <input type="hidden" id="esewatAmt" name="total_amount" value="0" required>
+        <input type="hidden" id="esewaPid" name="transaction_uuid" value="EVT-000" required>
+        <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
+        <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
+        <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
+        <input type="hidden" id="successUrl" name="success_url" value="" required>
+        <input type="hidden" id="failureUrl" name="failure_url" value="" required>
+        <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
+        <!-- The signature generated natively via JS below -->
+        <input type="hidden" id="signature" name="signature" value="" required>
+
+        <button type="submit" class="esewa-btn" id="payBtn">
+          Confirm & Pay with eSewa
+        </button>
+      </form>
     </div>
-
-    <label for="quantity">Number of Tickets</label>
-    <input type="number" id="quantity" name="quantity" min="1" value="1" oninput="updateTotal()" />
-
-    <div class="total" id="total">Total: NPR 1000</div>
-
-    <a href="payment.html" class="proceed-btn" id="process">Proceed to Payment</a>
   </div>
 
-  <!-- Payment Info -->
-  <div class= "payment-container" style="display: none;">
-    <h2>Complete Your Payment</h2>
-    <div class="payment-summary">
-      <p><strong>Event:</strong> Live Music Concert 2025</p>
-      <p><strong>Amount:</strong> NPR 1000</p>
-    </div>
+  <script>
+    // URL Parsing
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawName = urlParams.get('name') || "General Event Ticket";
+    let rawPrice = urlParams.get('price') || "500";
+    const rawDate = urlParams.get('date') || "TBD";
 
-    <!-- eSewa Payment Form -->
-    <form action="https://uat.esewa.com.np/epay/main" method="POST">
-      <!-- Payment values -->
-      <input type="hidden" name="amt" value="1000">
-      <input type="hidden" name="txAmt" value="0">
-      <input type="hidden" name="psc" value="0">
-      <input type="hidden" name="pdc" value="0">
-      <input type="hidden" name="tAmt" value="1000">
+    // Handle string logic
+    const isFree = rawPrice.toLowerCase() === "free";
+    const numericPrice = isFree ? 0 : parseInt(rawPrice.replace(/\D/g,''));
 
-      <!-- Transaction ID (must be unique in live) -->
-      <input type="hidden" name="pid" value="EVT123456">
+    document.getElementById('eventName').textContent = rawName;
+    document.getElementById('eventDate').textContent = rawDate;
+    document.getElementById('eventPrice').textContent = isFree ? "Free" : "Rs. " + numericPrice;
 
-      <!-- Merchant Code: Replace with your actual code for live -->
-      <input type="hidden" name="scd" value="EPAYTEST">
+    // Interactive Total Calculation + Signature Generation
+    async function calculateTotal() {
+        const qty = parseInt(document.getElementById('ticketQty').value) || 1;
+        const total = numericPrice * qty;
+        
+        document.getElementById('totalDisplay').textContent = isFree ? "Total: Free" : "Total: Rs. " + total;
+        
+        // Form specific values
+        const currentOrigin = window.location.origin;
+        document.getElementById('successUrl').value = currentOrigin + "/Payment/success.html?name=" + encodeURIComponent(rawName) + "&price=" + numericPrice + "&date=" + encodeURIComponent(rawDate);
+        document.getElementById('failureUrl').value = currentOrigin + "/mainEvent/event.html";
+        
+        const uuid = "EVTG-" + Date.now();
+        document.getElementById('esewaAmt').value = total.toString();
+        document.getElementById('esewatAmt').value = total.toString();
+        document.getElementById('esewaPid').value = uuid;
 
-      <!-- Redirect URLs -->
-      <input type="hidden" name="su" value="http://localhost/confirmation.html">
-      <input type="hidden" name="fu" value="http://localhost/error.html">
+        // V2 Signature Requirements
+        const totalAmountStr = total.toString();
+        const productCode = "EPAYTEST";
+        const secret = '8gBm/:&EnhH.1/q'; 
+        
+        const message = "total_amount=" + totalAmountStr + ",transaction_uuid=" + uuid + ",product_code=" + productCode;
+        
+        // Generate HMAC SHA-256 Signature using native Web Crypto API
+        try {
+            const encoder = new TextEncoder();
+            const keyData = encoder.encode(secret);
+            const messageData = encoder.encode(message);
+            
+            const cryptoKey = await crypto.subtle.importKey(
+                'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+            );
+            const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, messageData);
+            
+            let binary = '';
+            const bytes = new Uint8Array(signatureBuffer);
+            for (let i = 0; i < bytes.byteLength; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            document.getElementById('signature').value = btoa(binary);
 
-      <button class="esewa-btn" type="submit" id="esewa-btn">Pay with eSewa</button>
-    </form>
-  </div>
+        } catch(error) {
+            console.error("V2 HMAC Signature Generation failed: ", error);
+            // Fallback fail gracefully or prevent default
+        }
+    }
+    
+    document.getElementById('ticketQty').addEventListener('input', calculateTotal);
+    calculateTotal(); // Initialize once
 
-    <!-- Confirmation Message -->
-  <div class="confirmation-box" style="display: none;">
-    <h2>✅ Payment Successful!</h2>
-    <p>Thank you for your purchase.</p>
-    <p>Your ticket for <strong>Live Music Concert 2025</strong> has been confirmed.</p>
-    <p>An email with your ticket and details has been sent to you.</p>
-    <a href="../mainEvent/event.html">Go to Home</a>
-  </div>
+    // Auth gating check
+    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    
+    // Update simple navbar
+    if(activeUser) {
+        let nav = document.getElementById('navLoginBtn');
+        nav.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+        nav.href = "../mainEvent/profile.html"; 
+        nav.style.background = "var(--secondary)";
+    }
 
-<br>
- <footer>
-    <p>&copy; 2025 Eventra. All rights reserved.</p>
-    <p>Your one-stop platform for event discovery and hosting.</p>
-    <div>
-      <a href="../mainEvent/event.html">Home</a> |
-      <a href="../mainEvent/event.html">Events</a> |
-      <a href="../ASign-InPage/index.html">Login</a> |
-      <a href="#" onclick="alert('on working')">Host Login</a>
-    </div>
-  </footer>
-<script src="payment.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    document.getElementById('esewaForm').addEventListener('submit', (e) => {
+        if(!activeUser) {
+            e.preventDefault();
+            document.getElementById('loginWarning').style.display = 'block';
+            window.scrollTo(0, 0);
+            return;
+        }
+
+        if(isFree) {
+            e.preventDefault();
+            // Directly bypass payment natively redirect to success if price is 0
+            window.location.href = document.getElementById('successUrl').value;
+        }
+        
+        // Otherwise, forms submit normally to V2
+    });
+  </script>
 </body>
 </html>

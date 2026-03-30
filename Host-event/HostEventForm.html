@@ -1,172 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVENTRA -Host Event</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="../mainEvent/footer.css">
-      <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
-
-    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
-    #hostEventForm { max-width: 600px; margin: auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    label { display: block; margin-top: 1rem; margin-bottom: 0.25rem; font-weight: bold; }
-    input, textarea, select { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
-    button { margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-    .error { color: red; font-size: 0.875rem; margin-top: 0.25rem; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventra - Host an Event</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="../images/Logo1.png" />
+  
+  <link rel="stylesheet" href="../mainEvent/event.css" />
+  <style>
+    .page-header {
+      padding: 150px 20px 60px;
+      text-align: center;
+      background: linear-gradient(to bottom, #f8fafc, #ffffff);
+    }
+    .page-title {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .host-form-container {
+      max-width: 650px;
+      margin: 0 auto 100px;
+      padding: 40px;
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+    
+    .form-control, .form-select {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--background);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      transition: all 0.3s;
+      color: var(--text-main);
+    }
+    
+    .form-control:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(237, 61, 12, 0.1);
+    }
+    
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    .file-upload-block {
+      border: 2px dashed var(--border);
+      padding: 30px;
+      text-align: center;
+      border-radius: 12px;
+      background: var(--background);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .file-upload-block:hover {
+      border-color: var(--primary);
+      background: rgba(237, 61, 12, 0.05);
+    }
+    
+    .file-upload-block input[type="file"] {
+      display: none;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    
+    .submit-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(237, 61, 12, 0.2);
+    }
+    
+    .error-msg {
+      color: #dc2626;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+    }
   </style>
 </head>
 <body>
-<nav
-      class="navbar navbar-expand-lg fixed-top justify-center"
-      style="background-color: #0b1126; padding-top: 15px"
-    >
-      <div class="container">
-        <a
-          class="navbar-brand p-1"
-          href="event.html"
-          style="color: aliceblue; font-weight: bold; font-size: 24px"
-          ><img src="../images/Logo1.png" width="30" height="30" style="margin: 0 5px;" alt=""/>Eventra</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse"
-          id="navbarSupportedContent"
-          style="font-family: Open sans"
-        >
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" style="padding: 0 20px 0 40px">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="../mainEvent/event.html"
-                style="color: aliceblue"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/contact_us.html" style="color: aliceblue"
-                >Contact Us</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a
-                class="nav-link"
-                href="../Host-event/HostEventForm.html"
-                style="color: aliceblue"
-                >Host-Event</a
-              >
-            </li>
-            <li class="nav-item" style="padding: 0 20px">
-              <a class="nav-link" href="../mainEvent/about_us.html" style="color: aliceblue">About Us</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search" style="font-family: Open sans">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
-          <li
-            class="nav-item d-flex"
-            style="
-              padding: 15px 5px;
-              background-color: #ed3d0c;
-              border-radius: 20px;
-              padding: 5px 0;
-              align-items: center;
-              font-family: Open sans;
-            "
-          >
-            <a
-              class="nav-link"
-              href="../ASign-InPage/index.html"
-              style="color: aliceblue; padding: 0 10px; align-items: center;"
-              >
-              <i class="fa fa-user " style="font-size: 20px; padding: 0 5px;"></i>
-              Login</a>
-          </li>
+
+  <!-- Premium Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="nav-brand" href="../mainEvent/event.html">
+        <img src="../images/Logo1.png" alt="Eventra Logo">
+        Eventra
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../mainEvent/event.html">Home</a></li>
+        <li><a href="../mainEvent/contact_us.html">Contact Us</a></li>
+        <li><a href="HostEventForm.html" class="active">Host Event</a></li>
+        <li><a href="../mainEvent/about_us.html">About Us</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="../ASign-InPage/index.html" class="login-btn"><i class="fa fa-user"></i> Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="page-header">
+    <h1 class="page-title">Host an Event</h1>
+    <p class="page-subtitle">Turn your vision into reality. Provide the details below to publish your event to thousands of attendees across Nepal.</p>
+  </header>
+
+  <!-- Form -->
+  <div class="host-form-container">
+    <form id="hostEventForm">
+      <div class="form-group">
+        <label for="title">Event Title</label>
+        <input type="text" id="title" class="form-control" placeholder="e.g. Kathmandu Summer Festival" required />
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" class="form-select" required>
+            <option value="">Select Category</option>
+            <option value="Music">Live Music</option>
+            <option value="Tech">Tech Conference</option>
+            <option value="Health">Health & Wellness</option>
+            <option value="Education">Education & Seminar</option>
+          </select>
         </div>
       </div>
-    </nav>
-<br><br><br><br>
-<form id="hostEventForm">
-    <h2>Host an Event</h2>
-    <label for="title">Event Title</label>
-    <input type="text" id="title" name="title" required />
 
-    <label for="date">Date</label>
-    <input type="date" id="date" name="date" required />
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" class="form-control" placeholder="e.g. Dasharath Rangasala Stadium" required />
+      </div>
 
-    <label for="location">Location</label>
-    <input type="text" id="location" name="location" required />
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" class="form-control" placeholder="Tell attendees what to expect..." required></textarea>
+      </div>
 
-    <label for="category">Category</label>
-    <select id="category" name="category" required>
-      <option value="">Select a category</option>
-      <option value="Tech">Rock song</option>
-      <option value="Music">Local song</option>
-      <option value="Health">Lok dohori</option>
-      <option value="Education">Rap song</option>
-    </select>
+      <div class="form-group">
+        <label>Upload Banner Image</label>
+        <label class="file-upload-block" for="image">
+          <i class="fas fa-cloud-upload-alt" style="font-size: 40px; color: var(--accent); margin-bottom: 15px;"></i>
+          <p style="color: var(--secondary); font-weight: 600; margin-bottom: 5px;">Click to browse, or drag & drop</p>
+          <p style="color: var(--text-muted); font-size: 14px;">High-resolution images work best (Max 5MB)</p>
+          <input type="file" id="image" accept="image/*" required />
+        </label>
+      </div>
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description" rows="4" required></textarea>
+      <div id="formErrors" class="error-msg">Please fill out all fields before submitting.</div>
+      
+      <button type="submit" class="submit-btn">Publish Event</button>
+    </form>
+  </div>
 
-    <label for="image">Upload Image</label>
-    <input type="file" id="image" name="image" accept="image/*" required />
-
-    <button type="submit"><a href="Host_dashboard.html" style="text-decoration: none; color: #fff;">Submit</a></button>
-    <div id="formErrors" class="error"></div>
-  </form>
-
-<br>
- <footer>
-    <p>&copy; 2025 Eventra. All rights reserved.</p>
-    <p>Your one-stop platform for event discovery and hosting.</p>
-    <div>
-     <a href="event.html">Home</a> |
-      <a href="events.html">Events</a> |
-      <a href="login.html">Login</a> |
-      <a href="host-login.html">Host Login</a>
+  <!-- Premium Footer -->
+  <footer class="premium-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3><img src="../images/Logo1.png" width="30"> Eventra</h3>
+        <p>Your one-stop platform for event discovery and hosting across Nepal. Making memories happen.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="../mainEvent/event.html">Home</a>
+        <a href="../mainEvent/about_us.html">About Us</a>
+        <a href="../mainEvent/contact_us.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>For Hosts</h4>
+        <a href="HostEventForm.html">Host an Event</a>
+        <a href="Host_dashboard.html">Host Dashboard</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Eventra. All rights reserved.</p>
     </div>
   </footer>
+
   <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('mobile-active');
+      const icon = mobileMenuBtn.querySelector('i');
+      if (navLinks.classList.contains('mobile-active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Global Auth Navbar Update
+    document.addEventListener("DOMContentLoaded", function() {
+        const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+        if(activeUser) {
+            const loginBtns = document.querySelectorAll('.login-btn');
+            loginBtns.forEach(btn => {
+                btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+                btn.href = "../mainEvent/profile.html"; 
+                btn.style.background = "var(--secondary)";
+            });
+        }
+    });
+
     const form = document.getElementById('hostEventForm');
     const errors = document.getElementById('formErrors');
 
     form.addEventListener('submit', function(event) {
-      errors.textContent = '';
+      event.preventDefault();
+      errors.style.display = 'none';
+      
       const requiredFields = ['title', 'date', 'location', 'category', 'description', 'image'];
       let hasError = false;
+      
+      const newEvent = {};
+      
       requiredFields.forEach(id => {
         const el = document.getElementById(id);
         if (!el.value || (el.type === 'file' && el.files.length === 0)) {
           hasError = true;
+          el.style.borderColor = '#dc2626';
+        } else {
+          el.style.borderColor = 'var(--border)';
+          
+          if(id === 'title') newEvent.name = el.value;
+          else if(id !== 'image') newEvent[id] = el.value;
         }
       });
+      
       if (hasError) {
-        event.preventDefault();
-        errors.textContent = 'Please fill out all fields before submitting.';
+        errors.style.display = 'block';
+      } else {
+        
+        const imageFile = document.getElementById('image').files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            
+            // Mathematically Compress the Image!
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                
+                // Scale down securely to 800px width for the web
+                let MAX_WIDTH = 800;
+                let scaleSize = MAX_WIDTH / img.width;
+                if(scaleSize > 1) scaleSize = 1; // Don't upscale tiny images
+                
+                canvas.width = img.width * scaleSize;
+                canvas.height = img.height * scaleSize;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Output as heavily compressed JPEG (70% quality)
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                newEvent.photo = compressedBase64;
+                
+                // Finalize event format for Homepage
+                newEvent.price = "Free"; 
+                newEvent.tag = newEvent.category; 
+                
+                // Setup user specific storage
+                const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+                if(activeUser) {
+                   let users = JSON.parse(localStorage.getItem('users')) || {};
+                   if(users[activeUser.username]) {
+                       users[activeUser.username].hosted.push(newEvent);
+                       localStorage.setItem('users', JSON.stringify(users));
+                   }
+                }
+                
+                // Push the new event globally immediately
+                let hostedEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+                hostedEvents.push(newEvent);
+                
+                try {
+                    localStorage.setItem('hostedEvents', JSON.stringify(hostedEvents));
+                    alert('Compression Successful! Event successfully hosted. You can now view it on the Homepage!');
+                    window.location.href = "../mainEvent/event.html";
+                } catch(storageError) {
+                    alert('Error: Your browser memory is completely full. Please clear your site data.');
+                }
+            };
+            img.src = e.target.result;
+        };
+
+        if(imageFile) {
+            reader.readAsDataURL(imageFile);
+        }
       }
     });
   </script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>
