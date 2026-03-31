@@ -1,24 +1,27 @@
-// main.js - Upgraded for Fully Functional Dynamics
+// main.js - Fully defensive version (works on event.html, profile.html, eventdetail.html)
 
 async function displayEvents() {
     const eventsContainer = document.getElementById('events');
+    // Guard: only run on pages that have the events grid
+    if (!eventsContainer) return;
+
     eventsContainer.innerHTML = '';
 
-    // 1. Fetch default events from JSON
+    // 1. Fetch default events from JSON using absolute path (safe for all URL contexts)
     let allEvents = [];
     try {
-        const response = await fetch('list.json');
+        const response = await fetch('/mainEvent/list.json');
         if (response.ok) {
             const data = await response.json();
             allEvents = data;
         }
     } catch (e) {
-        console.error('Failed to load local json:', e);
+        console.error('Failed to load list.json:', e);
     }
 
-    // 2. Fetch custom Hosted events from LocalStorage
+    // 2. Merge custom hosted events from localStorage
     const customEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
-    allEvents = [...allEvents, ...customEvents]; // Merge them!
+    allEvents = [...allEvents, ...customEvents];
 
     // Save global master copy for search
     window.masterEventList = allEvents;
@@ -28,9 +31,11 @@ async function displayEvents() {
 
 function renderCards(eventArray) {
     const eventsContainer = document.getElementById('events');
+    if (!eventsContainer) return;
+
     eventsContainer.innerHTML = '';
 
-    if(eventArray.length === 0) {
+    if (eventArray.length === 0) {
         eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-calendar-times-o" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events available.</div>';
         return;
     }
@@ -41,7 +46,7 @@ function renderCards(eventArray) {
         cardDiv.innerHTML = `
             <div class="card-image-wrapper">
                 <span class="card-tag">${data.tag || data.category}</span>
-                <a href="../mainEvent/eventdetail.html?name=${encodeURIComponent(data.name)}"><img src="${data.photo || '../images/Main_carnival.jpg'}" alt="${data.name}" style="width: 100%; height: 200px; object-fit: cover;"></a>
+                <a href="eventdetail.html?name=${encodeURIComponent(data.name)}"><img src="${data.photo || '../images/Main_carnival.jpg'}" alt="${data.name}" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.src='../images/Main_carnival.jpg'"></a>
             </div>
             <div class="card-content">
                 <h3>${data.name}</h3>
@@ -63,51 +68,54 @@ function renderCards(eventArray) {
     });
 }
 
-// Ensure the page fetches everything on load
+// Run on load
 displayEvents();
 
-// Upgrade Search Functionality to correctly filter both standard and custom events
+// ── Search (only wires up if search elements exist on this page) ─────────────
 const searchInputField = document.getElementById('searchValue');
 const searchButton = document.getElementById('search');
 
-searchButton.addEventListener('click', (e) => {
-    e.preventDefault(); 
-    const searchValue = searchInputField.value.toLowerCase().trim();
-    
-    if (searchValue === '') {
-        renderCards(window.masterEventList);
-        return;
-    }
+if (searchInputField && searchButton) {
+    searchButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const searchValue = searchInputField.value.toLowerCase().trim();
 
-    // Filter instantly from the merged master list
-    const filtered = window.masterEventList.filter(data => {
-        const nameMatch = (data.name || '').toLowerCase().includes(searchValue);
-        const tagMatch = (data.tag || data.category || '').toLowerCase().includes(searchValue);
-        const locMatch = (data.location || '').toLowerCase().includes(searchValue);
-        return nameMatch || tagMatch || locMatch;
-    });
-
-    if(filtered.length > 0) {
-        renderCards(filtered);
-    } else {
-        const eventsContainer = document.getElementById('events');
-        eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-search" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events found matching your search.</div>';
-        setTimeout(() => {
+        if (searchValue === '') {
             renderCards(window.masterEventList);
-            searchInputField.value = '';
-        }, 3000);
-    }
-});
+            return;
+        }
 
-// Update global navbar to reflect authentication
+        const filtered = (window.masterEventList || []).filter(data => {
+            const nameMatch = (data.name || '').toLowerCase().includes(searchValue);
+            const tagMatch  = (data.tag || data.category || '').toLowerCase().includes(searchValue);
+            const locMatch  = (data.location || '').toLowerCase().includes(searchValue);
+            return nameMatch || tagMatch || locMatch;
+        });
+
+        if (filtered.length > 0) {
+            renderCards(filtered);
+        } else {
+            const eventsContainer = document.getElementById('events');
+            if (eventsContainer) {
+                eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-search" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events found matching your search.</div>';
+                setTimeout(() => {
+                    renderCards(window.masterEventList);
+                    searchInputField.value = '';
+                }, 3000);
+            }
+        }
+    });
+}
+
+// ── Navbar auth update (runs on every page that loads main.js) ───────────────
 function updateGlobalNavbar() {
     const activeUser = JSON.parse(localStorage.getItem('activeUser'));
     const allNavLogins = document.querySelectorAll('.login-btn');
-    
+
     allNavLogins.forEach(btn => {
-        if(activeUser) {
+        if (activeUser) {
             btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
-            btn.href = "../ASign-InPage/index.html"; 
+            btn.href = "../mainEvent/profile.html";   // ← FIXED: goes to profile, not login
             btn.style.background = "var(--secondary)";
         } else {
             btn.innerHTML = `<i class="fa fa-user"></i> Login`;
@@ -117,5 +125,5 @@ function updateGlobalNavbar() {
     });
 }
 
-// Call on startup
+// Always run navbar update
 updateGlobalNavbar();

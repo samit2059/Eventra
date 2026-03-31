@@ -292,7 +292,7 @@
 
         let allEvents = [];
         try {
-            const response = await fetch('list.json');
+            const response = await fetch('/mainEvent/list.json');
             if (response.ok) {
                 allEvents = await response.json();
             }
@@ -352,11 +352,32 @@
                   <div class="ticket-price-label">Base Price per Ticket</div>
                   
                   <a href="${paymentLink}" class="buy-btn-large">Buy Ticket Now</a>
-                  <a href="#" onclick="alert('Event link copied to clipboard!'); return false;" class="share-btn"><i class="fas fa-share-alt"></i> Share Event</a>
+                  <a href="#" onclick="copyEventLink(event)" class="share-btn"><i class="fas fa-share-alt"></i> Share Event</a>
                </div>
             </aside>
           </main>
         `;
+    }
+
+    // Copy current event URL to clipboard
+    function copyEventLink(e) {
+        e.preventDefault();
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = e.target.closest('.share-btn');
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
+            btn.style.borderColor = 'var(--accent)';
+            btn.style.color = 'var(--accent)';
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.style.borderColor = '';
+                btn.style.color = '';
+            }, 2500);
+        }).catch(() => {
+            // Fallback for older browsers
+            prompt('Copy this link:', url);
+        });
     }
 
     // Call Immediately

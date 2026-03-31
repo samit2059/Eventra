@@ -1,9 +1,9 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
+  "redirects": [
     {
       "source": "/",
-      "destination": "/mainEvent/event.html"
+      "destination": "/mainEvent/event.html",
+      "permanent": false
     }
   ],
   "trailingSlash": false

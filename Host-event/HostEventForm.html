@@ -333,8 +333,8 @@
                 
                 try {
                     localStorage.setItem('hostedEvents', JSON.stringify(hostedEvents));
-                    alert('Compression Successful! Event successfully hosted. You can now view it on the Homepage!');
-                    window.location.href = "../mainEvent/event.html";
+                    alert('Your event "' + newEvent.name + '" has been published successfully! You can see it on the Homepage and your Host Dashboard.');
+                    window.location.href = "Host_dashboard.html";
                 } catch(storageError) {
                     alert('Error: Your browser memory is completely full. Please clear your site data.');
                 }
