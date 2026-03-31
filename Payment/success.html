@@ -94,6 +94,22 @@
   </div>
 
   <script>
+    // ── Helper ───────────────────────────────────────────────────────────
+    function safeJSONParse(key, defaultValue = {}) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item) return defaultValue;
+            const parsed = JSON.parse(item);
+            if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+                if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+            }
+            return parsed;
+        } catch (e) {
+            console.error(`Error parsing localStorage key "${key}":`, e);
+            return defaultValue;
+        }
+    }
+
     // 1. Gather parameters from successful eSewa callback / internal url
     const urlParams = new URLSearchParams(window.location.search);
     const eventName = urlParams.get('name') || "General Ticket";
@@ -104,11 +120,14 @@
     document.getElementById('evDate').textContent = date;
 
     // 2. Locate Active User and inject ticket into their localStorage profile history!
-    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-    if(activeUser) {
-        let users = JSON.parse(localStorage.getItem('users')) || {};
+    const activeUser = safeJSONParse('activeUser', null);
+    if(activeUser && activeUser.username) {
+        let users = safeJSONParse('users', {});
         if(users[activeUser.username]) {
             // Push the ticket directly to their array
+            if (!Array.isArray(users[activeUser.username].tickets)) {
+                users[activeUser.username].tickets = [];
+            }
             users[activeUser.username].tickets.push({
                 eventName: eventName,
                 date: date,

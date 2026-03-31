@@ -343,8 +343,23 @@
     </div>
   </footer>
 
-  <script src="main.js"></script>
-  <script>
+  <script src="./main.js"></script>
+    // ── Helper ───────────────────────────────────────────────────────────
+    function safeJSONParse(key, defaultValue = {}) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item) return defaultValue;
+            const parsed = JSON.parse(item);
+            if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+                if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+            }
+            return parsed;
+        } catch (e) {
+            console.error(`Error parsing localStorage key "${key}":`, e);
+            return defaultValue;
+        }
+    }
+
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
     
@@ -361,22 +376,25 @@
     });
 
     // Populate Dashboard Data
-    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    const activeUser = safeJSONParse('activeUser', null);
     
-    if(!activeUser) {
+    if(!activeUser || !activeUser.username) {
         window.location.href = "../ASign-InPage/index.html"; // Protect route
     } else {
-        const users = JSON.parse(localStorage.getItem('users')) || {};
+        const users = safeJSONParse('users', {});
         const userData = users[activeUser.username] || { email: '', tickets: [], hosted: [] };
         
         document.getElementById('displayUsername').textContent = activeUser.username;
         document.getElementById('displayEmail').textContent = userData.email || 'Verified User';
         
-        document.getElementById('ticketCount').textContent = userData.tickets.length;
-        document.getElementById('hostedCount').textContent = userData.hosted.length;
+        const tickets = Array.isArray(userData.tickets) ? userData.tickets : [];
+        const hosted = Array.isArray(userData.hosted) ? userData.hosted : [];
+
+        document.getElementById('ticketCount').textContent = tickets.length;
+        document.getElementById('hostedCount').textContent = hosted.length;
         
         const ticketList = document.getElementById('ticketList');
-        if(userData.tickets.length === 0) {
+        if(tickets.length === 0) {
             ticketList.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-receipt"></i>
@@ -385,18 +403,19 @@
                 </div>
             `;
         } else {
-            userData.tickets.forEach(ticket => {
-                ticketList.innerHTML += `
-                    <li class="ticket-item">
+            tickets.forEach(ticket => {
+                const li = document.createElement('li');
+                li.className = 'ticket-item';
+                li.innerHTML = `
                       <div class="ticket-details">
-                        <h4>${ticket.eventName}</h4>
+                        <h4>${ticket.eventName || 'Event Ticket'}</h4>
                         <span><i class="fas fa-calendar-alt"></i> ${ticket.date || 'TBD'}</span>
                       </div>
                       <div class="ticket-price">
-                         Rs. ${ticket.price}
+                         Rs. ${ticket.price || '500'}
                       </div>
-                    </li>
                 `;
+                ticketList.appendChild(li);
             });
         }
     }
@@ -406,6 +425,5 @@
         localStorage.removeItem('activeUser');
         window.location.href = "../ASign-InPage/index.html";
     });
-  </script>
 </body>
 </html>
