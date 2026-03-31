@@ -243,6 +243,22 @@
   </footer>
 
   <script>
+    // ── Helper ───────────────────────────────────────────────────────────
+    function safeJSONParse(key, defaultValue = {}) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item) return defaultValue;
+            const parsed = JSON.parse(item);
+            if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+                if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+            }
+            return parsed;
+        } catch (e) {
+            console.error(`Error parsing localStorage key "${key}":`, e);
+            return defaultValue;
+        }
+    }
+
     // ── Mobile menu toggle ───────────────────────────────────────────────
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinksEl = document.getElementById('navLinks');
@@ -254,8 +270,8 @@
     });
 
     // ── Navbar auth update ───────────────────────────────────────────────
-    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-    if (activeUser) {
+    const activeUser = safeJSONParse('activeUser', null);
+    if (activeUser && activeUser.username) {
       const navBtn = document.getElementById('navLoginBtn');
       navBtn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
       navBtn.href = "../mainEvent/profile.html";
@@ -264,13 +280,13 @@
 
     // ── Load real hosted events from localStorage ────────────────────────
     function getMyEvents() {
-      if (activeUser) {
-        const users = JSON.parse(localStorage.getItem('users')) || {};
+      if (activeUser && activeUser.username) {
+        const users = safeJSONParse('users', {});
         const userData = users[activeUser.username] || {};
-        return userData.hosted || [];
+        return Array.isArray(userData.hosted) ? userData.hosted : [];
       }
       // Fallback: global list
-      return JSON.parse(localStorage.getItem('hostedEvents')) || [];
+      return safeJSONParse('hostedEvents', []);
     }
 
     function loadDashboard() {
@@ -288,7 +304,7 @@
 
       // Update subtitle
       const subtitle = document.getElementById('dashSubtitle');
-      subtitle.textContent = activeUser
+      subtitle.textContent = (activeUser && activeUser.username)
         ? `Welcome back, ${activeUser.username}! You have ${myEvents.length} event(s) hosted.`
         : 'Log in to see your specific events.';
 
@@ -341,24 +357,26 @@
     function deleteEvent(index) {
       if (!confirm('Delete this event? This cannot be undone.')) return;
 
+      const myEvents = getMyEvents();
+      const removedName = myEvents[index]?.name;
+
       // Remove from user-specific hosted array
-      if (activeUser) {
-        const users = JSON.parse(localStorage.getItem('users')) || {};
-        if (users[activeUser.username] && users[activeUser.username].hosted) {
-          const removedName = users[activeUser.username].hosted[index]?.name;
+      if (activeUser && activeUser.username) {
+        let users = safeJSONParse('users', {});
+        if (users[activeUser.username] && Array.isArray(users[activeUser.username].hosted)) {
           users[activeUser.username].hosted.splice(index, 1);
           localStorage.setItem('users', JSON.stringify(users));
 
           // Also remove from the global hostedEvents list
           if (removedName) {
-            let global = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+            let global = safeJSONParse('hostedEvents', []);
             global = global.filter(e => e.name !== removedName);
             localStorage.setItem('hostedEvents', JSON.stringify(global));
           }
         }
       } else {
         // No user — remove from global list
-        let global = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+        let global = safeJSONParse('hostedEvents', []);
         global.splice(index, 1);
         localStorage.setItem('hostedEvents', JSON.stringify(global));
       }

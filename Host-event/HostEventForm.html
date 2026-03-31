@@ -231,6 +231,22 @@
   </footer>
 
   <script>
+    // ── Helper ───────────────────────────────────────────────────────────
+    function safeJSONParse(key, defaultValue = {}) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item) return defaultValue;
+            const parsed = JSON.parse(item);
+            if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+                if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+            }
+            return parsed;
+        } catch (e) {
+            console.error(`Error parsing localStorage key "${key}":`, e);
+            return defaultValue;
+        }
+    }
+
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
     
@@ -248,15 +264,21 @@
 
     // Global Auth Navbar Update
     document.addEventListener("DOMContentLoaded", function() {
-        const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-        if(activeUser) {
-            const loginBtns = document.querySelectorAll('.login-btn');
-            loginBtns.forEach(btn => {
-                btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
-                btn.href = "../mainEvent/profile.html"; 
-                btn.style.background = "var(--secondary)";
-            });
+        const activeUser = safeJSONParse('activeUser', null);
+        
+        // Auth Guard: Redirect unlogged users
+        if(!activeUser || !activeUser.username) {
+            alert("You must be logged in to host an event. Redirecting to Login...");
+            window.location.href = "../ASign-InPage/index.html";
+            return;
         }
+
+        const loginBtns = document.querySelectorAll('.login-btn');
+        loginBtns.forEach(btn => {
+            btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+            btn.href = "../mainEvent/profile.html"; 
+            btn.style.background = "var(--secondary)";
+        });
     });
 
     const form = document.getElementById('hostEventForm');
@@ -318,17 +340,20 @@
                 newEvent.tag = newEvent.category; 
                 
                 // Setup user specific storage
-                const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-                if(activeUser) {
-                   let users = JSON.parse(localStorage.getItem('users')) || {};
+                const activeUser = safeJSONParse('activeUser', null);
+                if(activeUser && activeUser.username) {
+                   let users = safeJSONParse('users', {});
                    if(users[activeUser.username]) {
+                       if (!Array.isArray(users[activeUser.username].hosted)) {
+                           users[activeUser.username].hosted = [];
+                       }
                        users[activeUser.username].hosted.push(newEvent);
                        localStorage.setItem('users', JSON.stringify(users));
                    }
                 }
                 
                 // Push the new event globally immediately
-                let hostedEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+                let hostedEvents = safeJSONParse('hostedEvents', []);
                 hostedEvents.push(newEvent);
                 
                 try {

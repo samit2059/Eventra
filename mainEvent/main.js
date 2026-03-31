@@ -1,13 +1,27 @@
-// main.js - Fully defensive version (works on event.html, profile.html, eventdetail.html)
+/**
+ * Safely parses JSON from localStorage or returns a default value.
+ */
+function safeJSONParse(key, defaultValue = {}) {
+    try {
+        const item = localStorage.getItem(key);
+        if (!item) return defaultValue;
+        const parsed = JSON.parse(item);
+        if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+             if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+        }
+        return parsed;
+    } catch (e) {
+        console.error(`Error parsing localStorage key "${key}":`, e);
+        return defaultValue;
+    }
+}
 
 async function displayEvents() {
     const eventsContainer = document.getElementById('events');
-    // Guard: only run on pages that have the events grid
     if (!eventsContainer) return;
 
     eventsContainer.innerHTML = '';
 
-    // 1. Fetch default events from JSON using absolute path (safe for all URL contexts)
     let allEvents = [];
     try {
         const response = await fetch('/mainEvent/list.json');
@@ -19,13 +33,9 @@ async function displayEvents() {
         console.error('Failed to load list.json:', e);
     }
 
-    // 2. Merge custom hosted events from localStorage
-    const customEvents = JSON.parse(localStorage.getItem('hostedEvents')) || [];
+    const customEvents = safeJSONParse('hostedEvents', []);
     allEvents = [...allEvents, ...customEvents];
-
-    // Save global master copy for search
     window.masterEventList = allEvents;
-
     renderCards(allEvents);
 }
 
@@ -35,7 +45,7 @@ function renderCards(eventArray) {
 
     eventsContainer.innerHTML = '';
 
-    if (eventArray.length === 0) {
+    if (!Array.isArray(eventArray) || eventArray.length === 0) {
         eventsContainer.innerHTML = '<div class="error-msg"><i class="fa fa-calendar-times-o" style="font-size:30px; margin-bottom: 15px; color:#ddd;"></i><br>No events available.</div>';
         return;
     }
@@ -68,10 +78,8 @@ function renderCards(eventArray) {
     });
 }
 
-// Run on load
 displayEvents();
 
-// ── Search (only wires up if search elements exist on this page) ─────────────
 const searchInputField = document.getElementById('searchValue');
 const searchButton = document.getElementById('search');
 
@@ -107,15 +115,14 @@ if (searchInputField && searchButton) {
     });
 }
 
-// ── Navbar auth update (runs on every page that loads main.js) ───────────────
 function updateGlobalNavbar() {
-    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+    const activeUser = safeJSONParse('activeUser', null);
     const allNavLogins = document.querySelectorAll('.login-btn');
 
     allNavLogins.forEach(btn => {
-        if (activeUser) {
+        if (activeUser && activeUser.username) {
             btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
-            btn.href = "../mainEvent/profile.html";   // ← FIXED: goes to profile, not login
+            btn.href = "../mainEvent/profile.html";
             btn.style.background = "var(--secondary)";
         } else {
             btn.innerHTML = `<i class="fa fa-user"></i> Login`;
@@ -125,5 +132,4 @@ function updateGlobalNavbar() {
     });
 }
 
-// Always run navbar update
 updateGlobalNavbar();

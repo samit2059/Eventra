@@ -13,6 +13,27 @@ const submitBtn = document.getElementById('submitBtn');
 const emailGroup = document.getElementById('emailGroup');
 const genderGroup = document.getElementById('genderGroup');
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/**
+ * Safely parses JSON from localStorage or returns a default value.
+ */
+function safeJSONParse(key, defaultValue = {}) {
+    try {
+        const item = localStorage.getItem(key);
+        if (!item) return defaultValue;
+        const parsed = JSON.parse(item);
+        // If we expect an object but get something else (like an array stored as users), revert to default
+        if (defaultValue !== null && typeof defaultValue === 'object' && !Array.isArray(defaultValue)) {
+             if (Array.isArray(parsed) || typeof parsed !== 'object') return defaultValue;
+        }
+        return parsed;
+    } catch (e) {
+        console.error(`Error parsing localStorage key "${key}":`, e);
+        return defaultValue;
+    }
+}
+
 if(togglePassword) {
     togglePassword.addEventListener('click', function (e) {
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -49,9 +70,18 @@ if(toggleAuthMode) {
 }
 
 function checkLoginState() {
-    const activeUser = JSON.parse(localStorage.getItem('activeUser'));
-    if(activeUser) {
-        window.location.href = "../mainEvent/profile.html";
+    const activeUser = safeJSONParse('activeUser', null);
+    if(activeUser && activeUser.username) {
+        // Redundant nav update for immediate feedback
+        const loginBtns = document.querySelectorAll('.login-btn');
+        loginBtns.forEach(btn => {
+            btn.innerHTML = `<i class="fa fa-user-circle"></i> Hi, ${activeUser.username}`;
+            btn.href = "../mainEvent/profile.html";
+        });
+
+        setTimeout(() => {
+            window.location.href = "../mainEvent/profile.html";
+        }, 100);
     }
 }
 
@@ -61,21 +91,25 @@ if(form) {
         e.preventDefault();
         
         let isValid = true;
-        if (username.value.length < 3) {
+        if (username.value.trim().length < 3) {
             username.style.borderColor = 'red';
             isValid = false;
+        } else {
+            username.style.borderColor = '';
         }
         if (password.value.length < 6) {
             password.style.borderColor = 'red';
             isValid = false;
+        } else {
+            password.style.borderColor = '';
         }
 
         if(!isValid) {
-            alert("Please accurately fulfill all required fields.");
+            alert("Please fulfill all fields correctly (Username: 3+ chars, Password: 6+ chars).");
             return;
         }
 
-        let users = JSON.parse(localStorage.getItem('users')) || {};
+        let users = safeJSONParse('users', {});
 
         if(!isLoginMode) {
             // Register Logic
@@ -85,13 +119,13 @@ if(form) {
             }
             users[username.value] = {
                 password: password.value,
-                email: email.value,
+                email: email.value || '',
                 tickets: [],
                 hosted: []
             };
             localStorage.setItem('users', JSON.stringify(users));
             localStorage.setItem('activeUser', JSON.stringify({username: username.value}));
-            
+            alert('Registration Successful! Sending you to your dashboard...');
         } else {
             // Login Logic
             if(!users[username.value] || users[username.value].password !== password.value) {
@@ -105,5 +139,5 @@ if(form) {
     });
 }
 
-// Run check on load to immediately redirect logged in user
+// Run check on load
 checkLoginState();
