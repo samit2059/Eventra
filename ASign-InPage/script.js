@@ -14,6 +14,29 @@ const emailGroup = document.getElementById('emailGroup');
 const genderGroup = document.getElementById('genderGroup');
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+/**
+ * Self-Repair Helper: Cleans up any corrupted localStorage data on load.
+ */
+function repairStorage() {
+    try {
+        const usersRaw = localStorage.getItem('users');
+        if (usersRaw) {
+            const parsed = JSON.parse(usersRaw);
+            // If users was stored as an array or something else, fix it immediately
+            if (Array.isArray(parsed) || typeof parsed !== 'object') {
+                console.warn("Corrupted 'users' data detected. repairing...");
+                localStorage.setItem('users', JSON.stringify({}));
+            }
+        } else {
+            localStorage.setItem('users', JSON.stringify({}));
+        }
+    } catch (e) {
+        localStorage.setItem('users', JSON.stringify({}));
+    }
+}
+
+// Run repair on file load
+repairStorage();
 
 /**
  * Safely parses JSON from localStorage or returns a default value.
