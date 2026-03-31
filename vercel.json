@@ -6,5 +6,6 @@
       "permanent": false
     }
   ],
-  "trailingSlash": true
+  "trailingSlash": true,
+  "cleanUrls": true
 }
